@@ -4,6 +4,7 @@ import click
 import os
 import sys
 import yaml
+from paper.librarian import Librarian
 
 
 @click.group()
@@ -19,6 +20,16 @@ def init():
         yaml.dump({'paper_dir': paper_dir}, f, default_flow_style=False)
     if not os.path.isdir(paper_dir):
         os.mkdir(paper_dir)
+
+
+@cmd.command()
+@click.argument('keywords', nargs=-1)
+def search(keywords):
+    librarian = Librarian()
+    papers = librarian.search(keywords)
+    for index, paper in enumerate(papers):
+        print('- ' + str(index) + '. ' + paper['title'])
+    return 0
 
 
 def main():
