@@ -1,18 +1,29 @@
 # -*- coding: utf-8 -*-
 
-"""Console script for paper."""
-import sys
 import click
+import os
+import sys
+import yaml
 
 
-@click.command()
-def main(args=None):
-    """Console script for paper."""
-    click.echo("Replace this message by putting your code into "
-               "paper.cli.main")
-    click.echo("See click documentation at http://click.pocoo.org/")
-    return 0
+@click.group()
+def cmd():
+    pass
+
+
+@cmd.command()
+def init():
+    print('Directory to save papers: ', end='')
+    paper_dir = input()
+    with open('.paperconfig', 'w') as f:
+        yaml.dump({'paper_dir': paper_dir}, f, default_flow_style=False)
+    if not os.path.isdir(paper_dir):
+        os.mkdir(paper_dir)
+
+
+def main():
+    cmd()
 
 
 if __name__ == "__main__":
-    sys.exit(main())  # pragma: no cover
+    sys.exit(main())
