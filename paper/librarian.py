@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import re
+import requests
+import yaml
 from pyquery import PyQuery
 
 
@@ -36,3 +38,13 @@ class Librarian:
     def get_user_input(self):
         user_input = input()
         return int(user_input)
+
+    def save(self, paper):
+        response = requests.get(paper['url'])
+        if response.status_code == 200:
+            with open('.paperconfig', 'r+') as config_file:
+                config = yaml.load(config_file)
+            last_name = paper['authors'][0].split(' ')[1]
+            file_name = last_name + paper['year'] + '.pdf'
+            with open(config['paper_dir'] + '/' + file_name, 'wb') as pdf_file:
+                pdf_file.write(response.content)
