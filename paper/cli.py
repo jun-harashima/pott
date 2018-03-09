@@ -29,6 +29,7 @@ def search(keywords):
     papers = librarian.search(keywords)
     for index, paper in enumerate(papers):
         print('- ' + str(index) + '. ' + paper['title'])
+    user_input = librarian.get_user_input()
     return 0
 
 

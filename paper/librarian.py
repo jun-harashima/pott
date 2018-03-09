@@ -32,3 +32,7 @@ class Librarian:
                 paper['authors'].append(re.sub(r'<a.+?>|</a>', '', author))
             paper['year'] = match.group(2)
         return paper
+
+    def get_user_input(self):
+        user_input = input()
+        return int(user_input)
