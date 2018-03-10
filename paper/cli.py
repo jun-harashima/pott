@@ -3,7 +3,6 @@
 import click
 import os
 import sys
-import yaml
 from paper.librarian import Librarian
 
 
@@ -14,18 +13,18 @@ def cmd():
 
 @cmd.command()
 def init():
-    print('Directory to save papers: ', end='')
-    paper_dir = input()
-    with open('.paperconfig', 'w') as f:
-        yaml.dump({'paper_dir': paper_dir}, f, default_flow_style=False)
-    if not os.path.isdir(paper_dir):
-        os.mkdir(paper_dir)
+    librarian = Librarian()
+    librarian.init()
 
 
 @cmd.command()
 @click.argument('keywords', nargs=-1)
 def search(keywords):
     librarian = Librarian()
+
+    if not os.path.isfile('.paperconfig'):
+        librarian.init()
+
     papers = librarian.search(keywords)
     for index, paper in enumerate(papers):
         print('- ' + str(index) + '. ' + paper['title'])

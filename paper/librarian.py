@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import os
 import re
 import requests
 import yaml
@@ -10,6 +11,14 @@ class Librarian:
 
     __SCHOLAR_URL = "https://scholar.google.com/scholar?q="
     __GS_A_REGEXP = re.compile(r'(.+?)(?:&#8230;)? - .+?, (.+?) - .+?')
+
+    def init(self):
+        print('Directory to save papers: ', end='')
+        paper_dir = input()
+        with open('.paperconfig', 'w') as f:
+            yaml.dump({'paper_dir': paper_dir}, f, default_flow_style=False)
+        if not os.path.isdir(paper_dir):
+            os.mkdir(paper_dir)
 
     def search(self, keywords):
         pq_html = PyQuery(self.__SCHOLAR_URL + ' '.join(keywords))
