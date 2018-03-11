@@ -9,16 +9,20 @@ from pyquery import PyQuery
 
 class Librarian:
 
+    __CONFIG_FILE = '.paperconfig'
     __SCHOLAR_URL = "https://scholar.google.com/scholar?q="
     __GS_A_REGEXP = re.compile(r'(.+?)(?:&#8230;)? - .+?, (.+?) - .+?')
 
-    def init(self):
+    def initialize(self):
         print('Directory to save papers: ', end='')
         paper_dir = input()
-        with open('.paperconfig', 'w') as f:
+        with open(self.__CONFIG_FILE, 'w') as f:
             yaml.dump({'paper_dir': paper_dir}, f, default_flow_style=False)
         if not os.path.isdir(paper_dir):
             os.mkdir(paper_dir)
+
+    def is_initialized(self):
+        return os.path.isfile(self.__CONFIG_FILE)
 
     def search(self, keywords):
         pq_html = PyQuery(self.__SCHOLAR_URL + ' '.join(keywords))
@@ -51,7 +55,7 @@ class Librarian:
     def save(self, paper):
         response = requests.get(paper['url'])
         if response.status_code == 200:
-            with open('.paperconfig', 'r+') as config_file:
+            with open(self.__CONFIG_FILE, 'r+') as config_file:
                 config = yaml.load(config_file)
             last_name = paper['authors'][0].split(' ')[1]
             file_name = last_name + paper['year'] + '.pdf'

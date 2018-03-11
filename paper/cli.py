@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import click
-import os
 import sys
 from paper.librarian import Librarian
 
@@ -14,7 +13,7 @@ def cmd():
 @cmd.command()
 def init():
     librarian = Librarian()
-    librarian.init()
+    librarian.initialize()
 
 
 @cmd.command()
@@ -22,8 +21,8 @@ def init():
 def search(keywords):
     librarian = Librarian()
 
-    if not os.path.isfile('.paperconfig'):
-        librarian.init()
+    if not librarian.is_initialized():
+        librarian.initialize()
 
     papers = librarian.search(keywords)
     for index, paper in enumerate(papers):
