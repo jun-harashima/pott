@@ -49,7 +49,9 @@ class Librarian:
         return paper
 
     def get_user_input(self):
-        user_input = input()
+        user_input = input('Paper to download [0-9]: ')
+        while re.match(r'[0-9]', user_input) is None:
+            user_input = input('Paper to download [0-9]: ')
         return int(user_input)
 
     def save(self, paper):
