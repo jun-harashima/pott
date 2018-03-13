@@ -9,14 +9,13 @@ from pyquery import PyQuery
 
 class Librarian:
 
-    __CONFIG_FILE = '.paperconfig'
+    CONFIG_FILE = '.paperconfig'
     __SCHOLAR_URL = "https://scholar.google.com/scholar?q="
     __GS_A_REGEXP = re.compile(r'(.+?)(?:&#8230;)? - .+?, (.+?) - .+?')
 
     def initialize(self):
-        print('Directory to save papers: ', end='')
-        paper_dir = input()
-        with open(self.__CONFIG_FILE, 'w') as f:
+        paper_dir = input('Directory to save papers: ')
+        with open(self.CONFIG_FILE, 'w') as f:
             yaml.dump({'paper_dir': paper_dir}, f, default_flow_style=False)
         if not os.path.isdir(paper_dir):
             os.mkdir(paper_dir)
