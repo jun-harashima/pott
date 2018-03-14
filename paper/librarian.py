@@ -38,8 +38,8 @@ class Librarian:
 
     def _extract_paper_from(self, pq_div):
         paper = {'url': '', 'title': '', 'authors': [], 'year': 0}
-        paper['url'] = pq_div.find('h3 a').attr('href')
-        paper['title'] = pq_div.find('h3').text()
+        paper['url'] = pq_div.find('div.gs_ggs.gs_fl a').attr('href')
+        paper['title'] = pq_div.find('div.gs_ri h3').text()
         match = re.search(self.__GS_A_REGEXP, pq_div.find('.gs_a').html())
         if match:
             for author in match.group(1).split(', '):
