@@ -21,7 +21,7 @@ class Librarian:
             os.mkdir(paper_dir)
 
     def is_initialized(self):
-        return os.path.isfile(self.__CONFIG_FILE)
+        return os.path.isfile(self.CONFIG_FILE)
 
     def search(self, keywords):
         pq_html = PyQuery(self.__SCHOLAR_URL + ' '.join(keywords))
