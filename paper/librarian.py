@@ -41,10 +41,11 @@ class Librarian:
         paper['url'] = pq_div.find('div.gs_ggs.gs_fl a').attr('href')
         paper['title'] = pq_div.find('div.gs_ri h3').text()
         match = re.search(self.__GS_A_REGEXP, pq_div.find('.gs_a').html())
-        if match:
-            for author in match.group(1).split(', '):
-                paper['authors'].append(re.sub(r'<a.+?>|</a>', '', author))
-            paper['year'] = match.group(2)
+        if not match:
+            return paper
+        for author in match.group(1).split(', '):
+            paper['authors'].append(re.sub(r'<a.+?>|</a>', '', author))
+        paper['year'] = match.group(2)
         return paper
 
     def get_user_input(self):
@@ -55,10 +56,11 @@ class Librarian:
 
     def save(self, paper):
         response = requests.get(paper['url'])
-        if response.status_code == 200:
-            with open(self.__CONFIG_FILE, 'r+') as config_file:
-                config = yaml.load(config_file)
-            last_name = paper['authors'][0].split(' ')[1]
-            file_name = last_name + paper['year'] + '.pdf'
-            with open(config['paper_dir'] + '/' + file_name, 'wb') as pdf_file:
-                pdf_file.write(response.content)
+        if response.status_code != 200:
+            return
+        with open(self.__CONFIG_FILE, 'r+') as config_file:
+            config = yaml.load(config_file)
+        last_name = paper['authors'][0].split(' ')[1]
+        file_name = last_name + paper['year'] + '.pdf'
+        with open(config['paper_dir'] + '/' + file_name, 'wb') as pdf_file:
+            pdf_file.write(response.content)
