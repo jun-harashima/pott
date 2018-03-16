@@ -26,7 +26,9 @@ def search(keywords):
 
     papers = librarian.search(keywords)
     for index, paper in enumerate(papers):
-        print('- ' + str(index) + '. ' + paper['title'])
+        print(str(index) + '. ' + paper['title'], end='')
+        print(' (PDF is N/A)' if paper['url'] is None else '')
+        print('   ' + ', '.join(paper['authors']))
     user_input = librarian.get_user_input()
     librarian.save(papers[user_input])
     return 0
