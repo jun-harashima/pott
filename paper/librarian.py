@@ -58,7 +58,7 @@ class Librarian:
         response = requests.get(paper['url'])
         if response.status_code != 200:
             return
-        with open(self.__CONFIG_FILE, 'r+') as config_file:
+        with open(self.CONFIG_FILE, 'r+') as config_file:
             config = yaml.load(config_file)
         last_name = paper['authors'][0].split(' ')[1]
         file_name = last_name + paper['year'] + '.pdf'
