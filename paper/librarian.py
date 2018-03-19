@@ -48,11 +48,19 @@ class Librarian:
         paper['year'] = match.group(2)
         return paper
 
-    def get_user_input(self):
+    def get_user_input(self, papers):
         user_input = input('Paper to download [0-9]: ')
-        while re.match(r'[0-9]', user_input) is None:
+        while self._is_valid_input(user_input, papers)
             user_input = input('Paper to download [0-9]: ')
         return int(user_input)
+
+    def _is_valid_input(user_input, papers):
+        if re.match(r'[0-9]', user_input) is None:
+            return 0
+        elif papers[int(user_input)]['url'] is None:
+            return 0
+        else:
+            return 1
 
     def save(self, paper):
         response = requests.get(paper['url'])

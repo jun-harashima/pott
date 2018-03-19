@@ -29,7 +29,7 @@ def search(keywords):
         print(str(index) + '. ' + paper['title'], end='')
         print(' (PDF is N/A)' if paper['url'] is None else '')
         print('   ' + ', '.join(paper['authors']))
-    user_input = librarian.get_user_input()
+    user_input = librarian.get_user_input(papers)
     librarian.save(papers[user_input])
     return 0
 
