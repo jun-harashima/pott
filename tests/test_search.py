@@ -12,8 +12,13 @@ class TestSearch(unittest.TestCase):
         html = """
         <html>
           <div class="gs_r gs_or gs_scl">
-            <div class="gs_ggs gs_fl"><a href="paper_url"></a></div>
-            <div class="gs_ri"><h3>title</h3><div class="gs_a">author - conference, year - site_url</div></div>
+            <div class="gs_ggs gs_fl">
+              <a href="paper_url"></a>
+            </div>
+            <div class="gs_ri">
+              <h3>title</h3>
+              <div class="gs_a">author - conference, year - site_url</div>
+            </div>
           </div>
         </html>
         """
