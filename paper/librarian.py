@@ -54,7 +54,7 @@ class Librarian:
             user_input = input('Paper to download [0-9]: ')
         return int(user_input)
 
-    def _is_valid_input(user_input, papers):
+    def _is_valid_input(self, user_input, papers):
         if re.match(r'[0-9]', user_input) is None:
             return 0
         elif papers[int(user_input)]['url'] is None:
