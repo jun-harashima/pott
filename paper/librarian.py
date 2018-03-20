@@ -50,7 +50,7 @@ class Librarian:
 
     def get_user_input(self, papers):
         user_input = input('Paper to download [0-9]: ')
-        while self._is_valid_input(user_input, papers)
+        while self._is_valid_input(user_input, papers):
             user_input = input('Paper to download [0-9]: ')
         return int(user_input)
 
