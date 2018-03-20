@@ -1,21 +1,9 @@
-[![Build Status](https://travis-ci.org/jun-harashima/paper.svg?branch=master)](https://travis-ci.org/jun-harashima/paper)
+.. image:: https://travis-ci.org/jun-harashima/paper.svg?branch=master
+    :target: https://travis-ci.org/jun-harashima/paper
 
 =====
 paper
 =====
-
-
-.. image:: https://img.shields.io/pypi/v/paper.svg
-        :target: https://pypi.python.org/pypi/paper
-
-.. image:: https://img.shields.io/travis/jun-harashima/paper.svg
-        :target: https://travis-ci.org/jun-harashima/paper
-
-.. image:: https://readthedocs.org/projects/paper/badge/?version=latest
-        :target: https://paper.readthedocs.io/en/latest/?badge=latest
-        :alt: Documentation Status
-
-
 
 
 Paper related commands on terminal
