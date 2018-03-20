@@ -21,7 +21,6 @@ class TestInitialize(unittest.TestCase):
         assert os.path.exists('test_dir') == 1
         assert os.path.exists('.test_paperconfig') == 1
 
-
     @patch('builtins.input')
     @patch('paper.librarian.Librarian.CONFIG_FILE', '.test_paperconfig')
     def test_is_initialized(self, mock_input):

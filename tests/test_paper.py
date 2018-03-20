@@ -5,10 +5,10 @@
 
 
 import unittest
-from click.testing import CliRunner
+# from click.testing import CliRunner
 
-from paper import paper
-from paper import cli
+# from paper import paper
+# from paper import cli
 
 
 class TestPaper(unittest.TestCase):
