@@ -3,25 +3,13 @@
 import os
 import re
 import requests
-import yaml
 from pyquery import PyQuery
 
 
 class Librarian:
 
-    CONFIG_FILE = '.paperconfig'
     __SCHOLAR_URL = "https://scholar.google.com/scholar?q="
     __GS_A_REGEXP = re.compile(r'(.+?)(?:&#8230;)? - .+?, (.+?) - .+?')
-
-    def initialize(self):
-        paper_dir = input('Directory to save papers: ')
-        with open(self.CONFIG_FILE, 'w') as f:
-            yaml.dump({'paper_dir': paper_dir}, f, default_flow_style=False)
-        if not os.path.isdir(paper_dir):
-            os.mkdir(paper_dir)
-
-    def is_initialized(self):
-        return os.path.isfile(self.CONFIG_FILE)
 
     def search(self, keywords):
         pq_html = PyQuery(self.__SCHOLAR_URL + ' '.join(keywords))
@@ -66,9 +54,11 @@ class Librarian:
         response = requests.get(paper['url'])
         if response.status_code != 200:
             return
-        with open(self.CONFIG_FILE, 'r+') as config_file:
-            config = yaml.load(config_file)
+
+        if not os.path.isdir('~/.paper/pdf'):
+            os.makedirs('~/.paper/pdf')
+
         last_name = paper['authors'][0].split(' ')[1]
         file_name = last_name + paper['year'] + '.pdf'
-        with open(config['paper_dir'] + '/' + file_name, 'wb') as pdf_file:
+        with open('~/.paper/pdf/' + file_name, 'wb') as pdf_file:
             pdf_file.write(response.content)
