@@ -11,19 +11,9 @@ def cmd():
 
 
 @cmd.command()
-def init():
-    librarian = Librarian()
-    librarian.initialize()
-
-
-@cmd.command()
 @click.argument('keywords', nargs=-1)
 def search(keywords):
     librarian = Librarian()
-
-    if not librarian.is_initialized():
-        librarian.initialize()
-
     papers = librarian.search(keywords)
     for index, paper in enumerate(papers):
         print(str(index) + '. ' + paper['title'], end='')
