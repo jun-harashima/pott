@@ -6,7 +6,7 @@ from paper.librarian import Librarian
 from pyquery import PyQuery
 
 
-class TestSearch(unittest.TestCase):
+class TestLibrarian(unittest.TestCase):
 
     def test_extract_papers_from(self):
         html = """
@@ -22,9 +22,8 @@ class TestSearch(unittest.TestCase):
           </div>
         </html>
         """
-        pq_html = PyQuery(html)
-        papers = Librarian()._extract_papers_from(pq_html)
-        assert papers == [
+
+        expected_papers = [
             {
                 'url': 'paper_url',
                 'title': 'title',
@@ -32,6 +31,10 @@ class TestSearch(unittest.TestCase):
                 'year': 'year',
             }
         ]
+
+        pq_html = PyQuery(html)
+        papers = Librarian()._extract_papers_from(pq_html)
+        self.assertEqual(papers, expected_papers)
 
 
 if __name__ == "__main__":
