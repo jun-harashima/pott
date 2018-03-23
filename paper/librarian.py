@@ -10,6 +10,7 @@ class Librarian:
 
     __SCHOLAR_URL = "https://scholar.google.com/scholar?q="
     __GS_A_REGEXP = re.compile(r'(.+?)(?:&#8230;)? - .+?, (.+?) - .+?')
+    __PDF_DIR = os.environ['HOME'] + '/.paper/pdf'
 
     def search(self, keywords):
         pq_html = PyQuery(self.__SCHOLAR_URL + ' '.join(keywords))
@@ -55,10 +56,10 @@ class Librarian:
         if response.status_code != 200:
             return
 
-        if not os.path.isdir('~/.paper/pdf'):
-            os.makedirs('~/.paper/pdf')
+        if not os.path.isdir(self.__PDF_DIR):
+            os.makedirs(self.__PDF_DIR)
 
         last_name = paper['authors'][0].split(' ')[1]
         file_name = last_name + paper['year'] + '.pdf'
-        with open('~/.paper/pdf/' + file_name, 'wb') as pdf_file:
+        with open(self.__PDF_DIR + '/' + file_name, 'wb') as pdf_file:
             pdf_file.write(response.content)
