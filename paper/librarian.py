@@ -39,17 +39,17 @@ class Librarian:
 
     def get_user_input(self, papers):
         user_input = input('Paper to download [0-9]: ')
-        while self._is_valid_input(user_input, papers):
+        while not self._is_valid_input(user_input, papers):
             user_input = input('Paper to download [0-9]: ')
         return int(user_input)
 
     def _is_valid_input(self, user_input, papers):
         if re.match(r'[0-9]', user_input) is None:
-            return 0
+            return False
         elif papers[int(user_input)]['url'] is None:
-            return 0
+            return False
         else:
-            return 1
+            return True
 
     def save(self, paper):
         response = requests.get(paper['url'])
