@@ -3,6 +3,7 @@
 import os
 import re
 import requests
+import yaml
 from pyquery import PyQuery
 
 
@@ -11,6 +12,7 @@ class Librarian:
     __SCHOLAR_URL = "https://scholar.google.com/scholar?q="
     __GS_A_REGEXP = re.compile(r'(.+?)(?:&#8230;)? - .+?, (.+?) - .+?')
     __PDF_DIR = os.environ['HOME'] + '/.paper/pdf'
+    __PAPER_YAML = os.environ['HOME'] + '/.paper/paper.yml'
 
     def search(self, keywords):
         pq_html = PyQuery(self.__SCHOLAR_URL + ' '.join(keywords))
@@ -63,3 +65,22 @@ class Librarian:
         file_name = last_name + paper['year'] + '.pdf'
         with open(self.__PDF_DIR + '/' + file_name, 'wb') as pdf_file:
             pdf_file.write(response.content)
+
+        self._update_yaml(paper, file_name)
+
+    def _update_yaml(self, paper, file_name):
+        if not os.path.isfile(self.__PAPER_YAML):
+            with open(self.__PAPER_YAML, 'w') as yaml_file:
+                yaml.dump({}, yaml_file, default_flow_style=False)
+
+        with open(self.__PAPER_YAML, 'r') as yaml_file:
+            data = yaml.load(yaml_file)
+
+        with open(self.__PAPER_YAML, 'w') as yaml_file:
+            data[file_name] = {
+                'title':   paper['title'],
+                'authors': paper['authors'],
+                'year':    paper['year'],
+                'url':     paper['url'],
+            }
+            yaml.dump(data, yaml_file, default_flow_style=False)
