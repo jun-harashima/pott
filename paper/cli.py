@@ -11,8 +11,17 @@ def main():
 
 
 @main.command()
+@click.option('--global', '-g', 'target', flag_value='global', default=True)
+@click.option('--local', '-l', 'target', flag_value='local')
 @click.argument('keywords', nargs=-1)
-def search(keywords):
+def search(target, keywords):
+    if target == 'global':
+        _global_search(keywords)
+    elif target == 'local':
+        _local_search(keywords)
+
+
+def _global_search(keywords):
     librarian = Librarian()
     papers = librarian.search(keywords)
     for index, paper in enumerate(papers):
@@ -21,6 +30,10 @@ def search(keywords):
         print('   ' + ', '.join(paper['authors']))
     user_input = librarian.get_user_input(papers)
     librarian.save(papers[user_input])
+    return 0
+
+
+def _local_search(keywords):
     return 0
 
 
