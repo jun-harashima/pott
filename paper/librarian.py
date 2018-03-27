@@ -64,6 +64,7 @@ class Librarian:
         last_name = paper['authors'][0].split(' ')[1]
         file_name = last_name + paper['year'] + '.pdf'
         with open(self.__PDF_DIR + '/' + file_name, 'wb') as pdf_file:
+            print('downloading "' + paper['title'] + '"')
             pdf_file.write(response.content)
 
         self._update_yaml(paper, file_name)
