@@ -29,7 +29,9 @@ def _global_search(keywords):
         print(' (PDF is N/A)' if paper['url'] is None else '')
         print('   ' + ', '.join(paper['authors']))
     user_input = librarian.get_user_input(papers)
-    librarian.save(papers[user_input])
+    selected_papers = librarian.select(papers, user_input)
+    for paper in selected_papers:
+        librarian.save(paper)
     return 0
 
 
