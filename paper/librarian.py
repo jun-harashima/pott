@@ -5,12 +5,12 @@ import re
 import requests
 import yaml
 from pyquery import PyQuery
+from utils.html_utils import extract_paper_from
 
 
 class Librarian:
 
     __SCHOLAR_URL = "https://scholar.google.com/scholar?q="
-    __GS_A_REGEXP = re.compile(r'(.+?)(?:&#8230;)? - .+?, (.+?) - .+?')
     __PDF_DIR = os.environ['HOME'] + '/.paper/pdf'
     __PAPER_YAML = os.environ['HOME'] + '/.paper/paper.yml'
 
@@ -23,21 +23,9 @@ class Librarian:
         papers = []
         for div in pq_html.find('div.gs_r.gs_or.gs_scl'):
             pq_div = PyQuery(div)
-            paper = self._extract_paper_from(pq_div)
+            paper = extract_paper_from(pq_div)
             papers.append(paper)
         return papers
-
-    def _extract_paper_from(self, pq_div):
-        paper = {'url': '', 'title': '', 'authors': [], 'year': 0}
-        paper['url'] = pq_div.find('div.gs_ggs.gs_fl a').attr('href')
-        paper['title'] = pq_div.find('div.gs_ri h3').text()
-        match = re.search(self.__GS_A_REGEXP, pq_div.find('.gs_a').html())
-        if not match:
-            return paper
-        for author in match.group(1).split(', '):
-            paper['authors'].append(re.sub(r'<a.+?>|</a>', '', author))
-        paper['year'] = match.group(2)
-        return paper
 
     def get_user_input(self, papers):
         user_input = input('Paper to download [0-9] or all: ')
