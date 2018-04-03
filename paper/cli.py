@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import click
+import requests
 import sys
 from paper.librarian import Librarian
 
@@ -31,7 +32,10 @@ def _global_search(keywords):
     user_input = librarian.get_user_input(papers)
     selected_papers = librarian.select(papers, user_input)
     for paper in selected_papers:
-        librarian.save(paper)
+        try:
+            librarian.save(paper)
+        except requests.ConnectionError as e:
+            print(str(e))
     return 0
 
 
