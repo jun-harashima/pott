@@ -67,11 +67,7 @@ class Librarian:
     def save(self, paper):
         print('downloading "' + paper['title'] + '"')
 
-        try:
-            response = requests.get(paper['url'], timeout=10)
-        except requests.ConnectionError as e:
-            print(str(e))
-            return
+        response = requests.get(paper['url'], timeout=10)
 
         if response.status_code != 200:
             return
