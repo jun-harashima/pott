@@ -14,6 +14,14 @@ class Librarian:
     __PDF_DIR = os.environ['HOME'] + '/.paper/pdf'
     __PAPER_YAML = os.environ['HOME'] + '/.paper/paper.yml'
 
+    def __init__(self):
+        if not os.path.isdir(self.__PDF_DIR):
+            os.makedirs(self.__PDF_DIR)
+
+        if not os.path.isfile(self.__PAPER_YAML):
+            with open(self.__PAPER_YAML, 'w') as file:
+                yaml.dump({}, file, default_flow_style=False)
+
     def search(self, keywords):
         pq_html = PyQuery(self.__SCHOLAR_URL + ' '.join(keywords))
         papers = self._extract_papers_from(pq_html)
@@ -72,9 +80,6 @@ class Librarian:
         if response.status_code != 200:
             return
 
-        if not os.path.isdir(self.__PDF_DIR):
-            os.makedirs(self.__PDF_DIR)
-
         last_name = paper['authors'][0].split(' ')[1]
         file_name = last_name + paper['year'] + '.pdf'
         with open(self.__PDF_DIR + '/' + file_name, 'wb') as pdf_file:
@@ -83,10 +88,6 @@ class Librarian:
         self._update_yaml(paper, file_name)
 
     def _update_yaml(self, paper, file_name):
-        if not os.path.isfile(self.__PAPER_YAML):
-            with open(self.__PAPER_YAML, 'w') as yaml_file:
-                yaml.dump({}, yaml_file, default_flow_style=False)
-
         with open(self.__PAPER_YAML, 'r') as yaml_file:
             data = yaml.load(yaml_file)
 
