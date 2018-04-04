@@ -7,7 +7,6 @@ from pyquery import PyQuery
 
 
 class TestLibrarian(unittest.TestCase):
-
     def test_extract_papers_from(self):
         html = """
         <html>
