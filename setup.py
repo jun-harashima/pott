@@ -44,7 +44,7 @@ setup(
     include_package_data=True,
     keywords='paper',
     name='paper',
-    packages=find_packages(include=['paper']),
+    packages=find_packages(include=['paper', 'utils']),
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
