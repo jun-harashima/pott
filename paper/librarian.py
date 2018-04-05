@@ -5,6 +5,8 @@ import re
 import requests
 import yaml
 from pyquery import PyQuery
+from whoosh.fields import Schema, ID, TEXT
+from whoosh.index import create_in, open_dir
 from utils.html_utils import extract_paper_from
 from utils.pdf_utils import extract_text_from
 
@@ -14,6 +16,7 @@ class Librarian:
     __SCHOLAR_URL = "https://scholar.google.com/scholar?q="
     __PDF_DIR = os.environ['HOME'] + '/.paper/pdf'
     __TXT_DIR = os.environ['HOME'] + '/.paper/txt'
+    __INDEX_DIR = os.environ['HOME'] + '/.paper/index'
     __PAPER_YAML = os.environ['HOME'] + '/.paper/paper.yml'
 
     def __init__(self):
@@ -22,6 +25,9 @@ class Librarian:
 
         if not os.path.isdir(self.__TXT_DIR):
             os.makedirs(self.__TXT_DIR)
+
+        if not os.path.isdir(self.__INDEX_DIR):
+            os.makedirs(self.__INDEX_DIR)
 
         if not os.path.isfile(self.__PAPER_YAML):
             with open(self.__PAPER_YAML, 'w') as file:
@@ -74,8 +80,9 @@ class Librarian:
             return
 
         last_name = paper['authors'][0].split(' ')[1]
-        pdf_name = last_name + paper['year'] + '.pdf'
-        txt_name = last_name + paper['year'] + '.txt'
+        paper_prefix = last_name + paper['year']
+        pdf_name = paper_prefix + '.pdf'
+        txt_name = paper_prefix + '.txt'
 
         with open(self.__PDF_DIR + '/' + pdf_name, 'wb') as pdf_file:
             pdf_file.write(response.content)
@@ -84,6 +91,16 @@ class Librarian:
             text = extract_text_from(pdf_file)
             with open(self.__TXT_DIR + '/' + txt_name, 'w') as txt_file:
                 txt_file.write(text)
+
+        with open(self.__TXT_DIR + '/' + txt_name, 'r') as txt_file:
+            schema = Schema(path=ID(unique=True), title=TEXT(stored=True),
+                            content=TEXT(stored=True))
+            create_in(self.__INDEX_DIR, schema)
+            index = open_dir(self.__INDEX_DIR)
+            index_writer = index.writer()
+            index_writer.add_document(path=paper_prefix, title=paper['title'],
+                                      content=txt_file.read())
+            index_writer.commit()
 
         self._update_yaml(paper, pdf_name)
 
