@@ -32,7 +32,7 @@ class Librarian:
             with open(self.__PAPER_YAML, 'w') as file:
                 yaml.dump({}, file, default_flow_style=False)
 
-    def search(self, keywords):
+    def global_search(self, keywords):
         pq_html = PyQuery(self.__SCHOLAR_URL + ' '.join(keywords))
         papers = self._extract_papers_from(pq_html)
         return papers
