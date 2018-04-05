@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
 
 import click
+import logging
 import requests
 import sys
 from paper.librarian import Librarian
+
+
+LOG_FILE = 'log.txt'
 
 
 @click.group()
@@ -23,6 +27,7 @@ def search(target, keywords):
 
 
 def _global_search(keywords):
+    logger = _set_logger()
     librarian = Librarian()
     papers = librarian.search(keywords)
     for index, paper in enumerate(papers):
@@ -35,12 +40,19 @@ def _global_search(keywords):
         try:
             librarian.save(paper)
         except requests.ConnectionError as e:
-            print(str(e))
+            logger.log(40, str(e))
     return 0
 
 
 def _local_search(keywords):
     return 0
+
+
+def _set_logger():
+    logger = logging.getLogger(__name__)
+    fh = logging.FileHandler(LOG_FILE)
+    logger.addHandler(fh)
+    return logger
 
 
 if __name__ == "__main__":
