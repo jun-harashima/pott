@@ -6,17 +6,22 @@ import requests
 import yaml
 from pyquery import PyQuery
 from utils.html_utils import extract_paper_from
+from utils.pdf_utils import extract_text_from
 
 
 class Librarian:
 
     __SCHOLAR_URL = "https://scholar.google.com/scholar?q="
     __PDF_DIR = os.environ['HOME'] + '/.paper/pdf'
+    __TXT_DIR = os.environ['HOME'] + '/.paper/txt'
     __PAPER_YAML = os.environ['HOME'] + '/.paper/paper.yml'
 
     def __init__(self):
         if not os.path.isdir(self.__PDF_DIR):
             os.makedirs(self.__PDF_DIR)
+
+        if not os.path.isdir(self.__TXT_DIR):
+            os.makedirs(self.__TXT_DIR)
 
         if not os.path.isfile(self.__PAPER_YAML):
             with open(self.__PAPER_YAML, 'w') as file:
@@ -69,11 +74,18 @@ class Librarian:
             return
 
         last_name = paper['authors'][0].split(' ')[1]
-        file_name = last_name + paper['year'] + '.pdf'
-        with open(self.__PDF_DIR + '/' + file_name, 'wb') as pdf_file:
+        pdf_name = last_name + paper['year'] + '.pdf'
+        txt_name = last_name + paper['year'] + '.txt'
+
+        with open(self.__PDF_DIR + '/' + pdf_name, 'wb') as pdf_file:
             pdf_file.write(response.content)
 
-        self._update_yaml(paper, file_name)
+        with open(self.__PDF_DIR + '/' + pdf_name, 'rb') as pdf_file:
+            text = extract_text_from(pdf_file)
+            with open(self.__TXT_DIR + '/' + txt_name, 'w') as txt_file:
+                txt_file.write(text)
+
+        self._update_yaml(paper, pdf_name)
 
     def _update_yaml(self, paper, file_name):
         with open(self.__PAPER_YAML, 'r') as yaml_file:
