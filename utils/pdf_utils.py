@@ -4,6 +4,7 @@ from pdfminer.layout import LAParams
 from pdfminer.pdfpage import PDFPage
 from io import StringIO
 
+
 def extract_text_from(pdf_file):
     manager = PDFResourceManager()
     stringio = StringIO()

@@ -50,7 +50,7 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr htmlcov/
 
 lint: ## check style with flake8
-	flake8 paper tests
+	flake8 paper utils tests
 
 test: ## run tests quickly with the default Python
 	python setup.py test
