@@ -5,6 +5,7 @@ import logging
 import requests
 import sys
 from paper.librarian import Librarian
+from utils.input_utils import get_user_input
 
 
 LOG_FILE = 'log.txt'
@@ -34,7 +35,7 @@ def _global_search(keywords):
         print(str(index) + '. ' + paper['title'])
         print(' (PDF is N/A)' if paper['url'] is None else '')
         print('   ' + ', '.join(paper['authors']))
-    user_input = librarian.get_user_input(papers)
+    user_input = get_user_input(papers)
     selected_papers = librarian.select(papers, user_input)
     for paper in selected_papers:
         try:
