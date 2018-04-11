@@ -35,26 +35,6 @@ class TestLibrarian(unittest.TestCase):
         papers = Librarian()._extract_papers_from(pq_html)
         self.assertEqual(papers, expected_papers)
 
-    def test_is_valid_input(self):
-        papers = [
-            {
-                'url': None,
-                'title': 'title1',
-                'authors': ['author1'],
-                'year': 'year1',
-            },
-            {
-                'url': 'paper_url2',
-                'title': 'title2',
-                'authors': ['author2'],
-                'year': 'year2',
-            }
-        ]
-        librarian = Librarian()
-        self.assertEqual(librarian._is_valid_input('a', papers), False)
-        self.assertEqual(librarian._is_valid_input('0', papers), False)
-        self.assertEqual(librarian._is_valid_input('1', papers), True)
-
 
 if __name__ == "__main__":
     unittest.main()
