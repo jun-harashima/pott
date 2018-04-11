@@ -6,8 +6,8 @@ import yaml
 from pyquery import PyQuery
 from whoosh.fields import Schema, ID, TEXT
 from whoosh.index import create_in, open_dir
-from utils.html_utils import extract_paper_from
-from utils.pdf_utils import extract_text_from
+from paper.utils.html_utils import extract_paper_from
+from paper.utils.pdf_utils import extract_text_from
 
 
 class Librarian:

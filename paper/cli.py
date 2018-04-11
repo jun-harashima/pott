@@ -5,7 +5,7 @@ import logging
 import requests
 import sys
 from paper.librarian import Librarian
-from utils.input_utils import get_user_input
+from paper.utils.input_utils import get_user_input
 
 
 LOG_FILE = 'log.txt'
