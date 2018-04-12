@@ -1,5 +1,5 @@
 import unittest
-from utils.input_utils import _is_valid_input
+from paper.utils.input_utils import _is_valid_input
 
 
 class TestInputUtils(unittest.TestCase):
