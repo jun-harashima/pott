@@ -46,6 +46,11 @@ def _global_search(keywords):
 
 
 def _local_search(keywords):
+    librarian = Librarian()
+    papers = librarian.local_search(keywords)
+    for index, paper in enumerate(papers):
+        print(str(index) + '. ' + paper['title'])
+        print('   ' + ', '.join(paper['authors']))
     return 0
 
 
