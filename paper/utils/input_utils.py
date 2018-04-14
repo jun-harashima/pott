@@ -1,7 +1,7 @@
 import re
 
 
-def get_user_input(self, papers):
+def get_user_input(papers):
     user_input = input('Paper to download [0-9] or all: ')
     while not _is_valid_input(user_input, papers):
         user_input = input('Paper to download [0-9] or all: ')
