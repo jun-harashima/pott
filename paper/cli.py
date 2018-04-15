@@ -30,7 +30,7 @@ def search(target, keywords):
 def _global_search(keywords):
     logger = _set_logger()
     librarian = Librarian()
-    papers = librarian.search(keywords)
+    papers = librarian.global_search(keywords)
     for index, paper in enumerate(papers):
         print(str(index) + '. ' + paper['title'])
         print(' (PDF is N/A)' if paper['url'] is None else '')
