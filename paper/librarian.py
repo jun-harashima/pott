@@ -12,7 +12,7 @@ from paper.utils.pdf_utils import extract_text_from
 
 class Librarian:
 
-    __SCHOLAR_URL = "https://scholar.google.com/scholar?q="
+    __SCHOLAR_URL = "https://scholar.google.com/scholar"
     __PDF_DIR = os.environ['HOME'] + '/.paper/pdf'
     __TXT_DIR = os.environ['HOME'] + '/.paper/txt'
     __INDEX_DIR = os.environ['HOME'] + '/.paper/index'
@@ -33,7 +33,7 @@ class Librarian:
                 yaml.dump({}, file, default_flow_style=False)
 
     def global_search(self, keywords):
-        pq_html = PyQuery(self.__SCHOLAR_URL + ' '.join(keywords))
+        pq_html = PyQuery(self.__SCHOLAR_URL + '?q=' + ' '.join(keywords))
         papers = self._extract_papers_from(pq_html)
         return papers
 
