@@ -6,6 +6,8 @@ import yaml
 from pyquery import PyQuery
 from whoosh.fields import Schema, ID, TEXT
 from whoosh.index import create_in, open_dir
+from whoosh.filedb.filestore import FileStorage
+from whoosh.qparser import QueryParser
 from paper.utils.html_utils import extract_paper_from
 from paper.utils.pdf_utils import extract_text_from
 
@@ -97,3 +99,21 @@ class Librarian:
                 'url':     paper['url'],
             }
             yaml.dump(data, yaml_file, default_flow_style=False)
+
+    def local_search(self, keywords):
+        storage = FileStorage(self.__INDEX_DIR)
+        index = storage.open_index()
+        query_parser = QueryParser("title", schema=index.schema)
+        query = query_parser.parse(' '.join(keywords))
+        papers = []
+        with index.searcher() as searcher:
+            results = searcher.search(query)
+            for result in results:
+                paper = {
+                    'url': '',
+                    'title': result['title'],
+                    'authors': [],
+                    'year': 0,
+                }
+                papers.append(paper)
+        return papers
