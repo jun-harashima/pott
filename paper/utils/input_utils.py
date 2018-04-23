@@ -19,3 +19,11 @@ def _is_valid_input(user_input, papers):
         return False
     else:
         return True
+
+
+def select(self, papers, user_input):
+    if user_input == 'all':
+        return [paper for paper in papers
+                if not paper['url'] is None and not paper['authors'] == []]
+    else:
+        return [papers[int(user_input)]]
