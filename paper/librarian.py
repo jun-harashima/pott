@@ -39,13 +39,6 @@ class Librarian:
         papers = extract_papers_from(pq_html)
         return papers
 
-    def select(self, papers, user_input):
-        if user_input == 'all':
-            return [paper for paper in papers
-                    if not paper['url'] is None and not paper['authors'] == []]
-        else:
-            return [papers[int(user_input)]]
-
     def save(self, paper):
         print('downloading "' + paper['title'] + '"')
 
