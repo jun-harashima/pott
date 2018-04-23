@@ -1,12 +1,9 @@
-#!/usr/bin/env python
-
-
 import unittest
-from paper.librarian import Librarian
 from pyquery import PyQuery
+from paper.utils.html_utils import extract_papers_from
 
 
-class TestLibrarian(unittest.TestCase):
+class TestHtmlUtils(unittest.TestCase):
     def test_extract_papers_from(self):
         html = """
         <html>
@@ -32,7 +29,7 @@ class TestLibrarian(unittest.TestCase):
         ]
 
         pq_html = PyQuery(html)
-        papers = Librarian()._extract_papers_from(pq_html)
+        papers = extract_papers_from(pq_html)
         self.assertEqual(papers, expected_papers)
 
 

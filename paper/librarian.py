@@ -8,7 +8,7 @@ from whoosh.fields import Schema, ID, TEXT
 from whoosh.index import create_in, open_dir
 from whoosh.filedb.filestore import FileStorage
 from whoosh.qparser import QueryParser
-from paper.utils.html_utils import extract_paper_from
+from paper.utils.html_utils import extract_papers_from
 from paper.utils.pdf_utils import extract_text_from
 
 
@@ -36,15 +36,7 @@ class Librarian:
 
     def global_search(self, keywords):
         pq_html = PyQuery(self.__SCHOLAR_URL + '?q=' + ' '.join(keywords))
-        papers = self._extract_papers_from(pq_html)
-        return papers
-
-    def _extract_papers_from(self, pq_html):
-        papers = []
-        for div in pq_html.find('div.gs_r.gs_or.gs_scl'):
-            pq_div = PyQuery(div)
-            paper = extract_paper_from(pq_div)
-            papers.append(paper)
+        papers = extract_papers_from(pq_html)
         return papers
 
     def select(self, papers, user_input):
