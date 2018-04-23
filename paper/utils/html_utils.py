@@ -1,6 +1,17 @@
 import re
+from pyquery import PyQuery
+
 
 __GS_A_REGEXP = re.compile(r'(.+?)(?:&#8230;)? - .+?, (.+?) - .+?')
+
+
+def extract_papers_from(pq_html):
+    papers = []
+    for div in pq_html.find('div.gs_r.gs_or.gs_scl'):
+        pq_div = PyQuery(div)
+        paper = extract_paper_from(pq_div)
+        papers.append(paper)
+    return papers
 
 
 def extract_paper_from(pq_div):
