@@ -5,7 +5,7 @@ import logging
 import requests
 import sys
 from paper.librarian import Librarian
-from paper.utils.input_utils import get_user_input
+from paper.utils.input_utils import get_user_input, select
 
 
 LOG_FILE = 'log.txt'
@@ -36,7 +36,7 @@ def _global_search(keywords):
         print(' (PDF is N/A)' if paper['url'] is None else '')
         print('   ' + ', '.join(paper['authors']))
     user_input = get_user_input(papers)
-    selected_papers = librarian.select(papers, user_input)
+    selected_papers = select(papers, user_input)
     for paper in selected_papers:
         try:
             librarian.save(paper)
