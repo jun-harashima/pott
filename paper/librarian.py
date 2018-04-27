@@ -29,6 +29,9 @@ class Librarian:
 
         if not os.path.isdir(self.__INDEX_DIR):
             os.makedirs(self.__INDEX_DIR)
+            schema = Schema(path=ID(unique=True), title=TEXT(stored=True),
+                            content=TEXT(stored=True))
+            create_in(self.__INDEX_DIR, schema)
 
         if not os.path.isfile(self.__PAPER_YAML):
             with open(self.__PAPER_YAML, 'w') as file:
@@ -61,9 +64,6 @@ class Librarian:
                 txt_file.write(text)
 
         with open(self.__TXT_DIR + '/' + txt_name, 'r') as txt_file:
-            schema = Schema(path=ID(unique=True), title=TEXT(stored=True),
-                            content=TEXT(stored=True))
-            create_in(self.__INDEX_DIR, schema)
             index = open_dir(self.__INDEX_DIR)
             index_writer = index.writer()
             index_writer.add_document(path=paper_prefix, title=paper['title'],
