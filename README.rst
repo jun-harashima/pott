@@ -1,16 +1,16 @@
-.. image:: https://travis-ci.org/jun-harashima/paper.svg?branch=master
-    :target: https://travis-ci.org/jun-harashima/paper
+.. image:: https://travis-ci.org/jun-harashima/pott.svg?branch=master
+    :target: https://travis-ci.org/jun-harashima/pott
 
-=====
-paper
-=====
+====
+pott
+====
 
 
-Paper related commands on terminal
+Pott related commands on terminal
 
 
 * Free software: MIT license
-* Documentation: https://paper.readthedocs.io.
+* Documentation: https://pott.readthedocs.io.
 
 
 Features

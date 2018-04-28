@@ -1,4 +1,4 @@
-Welcome to paper's documentation!
+Welcome to pott's documentation!
 ======================================
 
 .. toctree::

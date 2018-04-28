@@ -1,17 +1,17 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""Tests for `paper` package."""
+"""Tests for `pott` package."""
 
 
 import unittest
 from click.testing import CliRunner
 
-from paper import cli
+from pott import cli
 
 
-class TestPaper(unittest.TestCase):
-    """Tests for `paper` package."""
+class TestPott(unittest.TestCase):
+    """Tests for `pott` package."""
 
     def test_command_line_interface(self):
         """Test the CLI."""

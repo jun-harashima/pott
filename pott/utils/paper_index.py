@@ -7,8 +7,8 @@ from whoosh.qparser import QueryParser
 
 class PaperIndex:
 
-    __TXT_DIR = os.environ['HOME'] + '/.paper/txt'
-    __INDEX_DIR = os.environ['HOME'] + '/.paper/index'
+    __TXT_DIR = os.environ['HOME'] + '/.pott/txt'
+    __INDEX_DIR = os.environ['HOME'] + '/.pott/index'
 
     def __init__(self):
         if not os.path.isdir(self.__INDEX_DIR):

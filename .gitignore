@@ -100,6 +100,6 @@ ENV/
 # mypy
 .mypy_cache/
 
-# paper
+# pott
 log.txt
 .idea/
