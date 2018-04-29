@@ -1,6 +1,6 @@
 import unittest
 from pyquery import PyQuery
-from paper.utils.html_utils import extract_papers_from
+from pott.utils.html_utils import extract_papers_from
 
 
 class TestHtmlUtils(unittest.TestCase):

@@ -1,4 +1,4 @@
-* paper version:
+* pott version:
 * Python version:
 * Operating System:
 

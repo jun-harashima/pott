@@ -2,6 +2,6 @@
 Usage
 =====
 
-To use paper in a project::
+To use pott in a project::
 
-    import paper
+    import pott

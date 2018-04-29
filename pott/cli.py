@@ -4,8 +4,8 @@ import click
 import logging
 import requests
 import sys
-from paper.librarian import Librarian
-from paper.utils.input_utils import get_user_input, select
+from pott.librarian import Librarian
+from pott.utils.input_utils import get_user_input, select
 
 
 LOG_FILE = 'log.txt'

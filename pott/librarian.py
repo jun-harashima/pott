@@ -4,17 +4,17 @@ import os
 import requests
 import yaml
 from pyquery import PyQuery
-from paper.utils.html_utils import extract_papers_from
-from paper.utils.pdf_utils import extract_text_from
-from paper.utils.paper_index import PaperIndex
+from pott.utils.html_utils import extract_papers_from
+from pott.utils.pdf_utils import extract_text_from
+from pott.utils.paper_index import PaperIndex
 
 
 class Librarian:
 
     __SCHOLAR_URL = "https://scholar.google.com/scholar"
-    __PDF_DIR = os.environ['HOME'] + '/.paper/pdf'
-    __TXT_DIR = os.environ['HOME'] + '/.paper/txt'
-    __PAPER_YAML = os.environ['HOME'] + '/.paper/paper.yml'
+    __PDF_DIR = os.environ['HOME'] + '/.pott/pdf'
+    __TXT_DIR = os.environ['HOME'] + '/.pott/txt'
+    __PAPER_YAML = os.environ['HOME'] + '/.pott/paper.yml'
 
     def __init__(self):
         if not os.path.isdir(self.__PDF_DIR):

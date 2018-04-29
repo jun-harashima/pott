@@ -8,13 +8,13 @@ Installation
 Stable release
 --------------
 
-To install paper, run this command in your terminal:
+To install pott, run this command in your terminal:
 
 .. code-block:: console
 
-    $ pip install paper
+    $ pip install pott
 
-This is the preferred method to install paper, as it will always install the most recent stable release.
+This is the preferred method to install pott, as it will always install the most recent stable release.
 
 If you don't have `pip`_ installed, this `Python installation guide`_ can guide
 you through the process.
@@ -26,19 +26,19 @@ you through the process.
 From sources
 ------------
 
-The sources for paper can be downloaded from the `Github repo`_.
+The sources for pott can be downloaded from the `Github repo`_.
 
 You can either clone the public repository:
 
 .. code-block:: console
 
-    $ git clone git://github.com/jun-harashima/paper
+    $ git clone git://github.com/jun-harashima/pott
 
 Or download the `tarball`_:
 
 .. code-block:: console
 
-    $ curl  -OL https://github.com/jun-harashima/paper/tarball/master
+    $ curl  -OL https://github.com/jun-harashima/pott/tarball/master
 
 Once you have a copy of the source, you can install it with:
 
@@ -47,5 +47,5 @@ Once you have a copy of the source, you can install it with:
     $ python setup.py install
 
 
-.. _Github repo: https://github.com/jun-harashima/paper
-.. _tarball: https://github.com/jun-harashima/paper/tarball/master
+.. _Github repo: https://github.com/jun-harashima/pott
+.. _tarball: https://github.com/jun-harashima/pott/tarball/master
