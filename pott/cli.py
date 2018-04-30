@@ -31,10 +31,7 @@ def _global_search(keywords):
     logger = _set_logger()
     librarian = Librarian()
     papers = librarian.global_search(keywords)
-    for index, paper in enumerate(papers):
-        print(str(index) + '. ' + paper['title'])
-        print(' (PDF is N/A)' if paper['url'] is None else '')
-        print('   ' + ', '.join(paper['authors']))
+    _show_results(papers)
     user_input = get_user_input(papers)
     selected_papers = select(papers, user_input)
     for paper in selected_papers:
@@ -48,9 +45,7 @@ def _global_search(keywords):
 def _local_search(keywords):
     librarian = Librarian()
     papers = librarian.local_search(keywords)
-    for index, paper in enumerate(papers):
-        print(str(index) + '. ' + paper['title'])
-        print('   ' + ', '.join(paper['authors']))
+    _show_results(papers)
     return 0
 
 
@@ -59,6 +54,12 @@ def _set_logger():
     fh = logging.FileHandler(LOG_FILE)
     logger.addHandler(fh)
     return logger
+
+
+def _show_results(papers):
+    for index, paper in enumerate(papers):
+        print('[' + str(index) + '] ' + paper['title'])
+        print('    ' + ', '.join(paper['authors']))
 
 
 if __name__ == "__main__":
