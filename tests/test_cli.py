@@ -1,20 +1,11 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-"""Tests for `pott` package."""
-
-
 import unittest
 from click.testing import CliRunner
-
 from pott import cli
 
 
-class TestPott(unittest.TestCase):
-    """Tests for `pott` package."""
+class TestCli(unittest.TestCase):
 
     def test_command_line_interface(self):
-        """Test the CLI."""
         runner = CliRunner()
         result = runner.invoke(cli.main)
         assert result.exit_code == 0
