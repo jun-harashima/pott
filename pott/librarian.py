@@ -2,10 +2,10 @@
 
 import os
 import requests
-import yaml
 from pyquery import PyQuery
 from pott.utils.html_utils import extract_papers_from
 from pott.utils.pdf_utils import extract_text_from
+from pott.utils.yaml import Yaml
 from pott.utils.paper_index import PaperIndex
 
 
@@ -14,7 +14,6 @@ class Librarian:
     __SCHOLAR_URL = "https://scholar.google.com/scholar"
     __PDF_DIR = os.environ['HOME'] + '/.pott/pdf'
     __TXT_DIR = os.environ['HOME'] + '/.pott/txt'
-    __PAPER_YAML = os.environ['HOME'] + '/.pott/paper.yml'
 
     def __init__(self):
         if not os.path.isdir(self.__PDF_DIR):
@@ -23,10 +22,7 @@ class Librarian:
         if not os.path.isdir(self.__TXT_DIR):
             os.makedirs(self.__TXT_DIR)
 
-        if not os.path.isfile(self.__PAPER_YAML):
-            with open(self.__PAPER_YAML, 'w') as file:
-                yaml.dump({}, file, default_flow_style=False)
-
+        self.yaml = Yaml()
         self.index = PaperIndex()
 
     def global_search(self, keywords):
@@ -54,21 +50,7 @@ class Librarian:
                 txt_file.write(text)
 
         self.index.save(paper, paper['id'], txt_name)
-
-        self._update_yaml(paper, pdf_name)
-
-    def _update_yaml(self, paper, file_name):
-        with open(self.__PAPER_YAML, 'r') as yaml_file:
-            data = yaml.load(yaml_file)
-
-        with open(self.__PAPER_YAML, 'w') as yaml_file:
-            data[file_name] = {
-                'title':   paper['title'],
-                'authors': paper['authors'],
-                'year':    paper['year'],
-                'url':     paper['url'],
-            }
-            yaml.dump(data, yaml_file, default_flow_style=False)
+        self.yaml.update(paper)
 
     def local_search(self, keywords):
         papers = self.index.search(keywords)
