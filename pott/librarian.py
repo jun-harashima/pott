@@ -42,10 +42,8 @@ class Librarian:
         if response.status_code != 200:
             return
 
-        last_name = paper['authors'][0].split(' ')[1]
-        paper_prefix = last_name + paper['year']
-        pdf_name = paper_prefix + '.pdf'
-        txt_name = paper_prefix + '.txt'
+        pdf_name = paper['id'] + '.pdf'
+        txt_name = paper['id'] + '.txt'
 
         with open(self.__PDF_DIR + '/' + pdf_name, 'wb') as pdf_file:
             pdf_file.write(response.content)
@@ -55,7 +53,7 @@ class Librarian:
             with open(self.__TXT_DIR + '/' + txt_name, 'w') as txt_file:
                 txt_file.write(text)
 
-        self.index.save(paper, paper_prefix, txt_name)
+        self.index.save(paper, paper['id'], txt_name)
 
         self._update_yaml(paper, pdf_name)
 

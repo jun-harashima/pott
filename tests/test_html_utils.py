@@ -21,10 +21,11 @@ class TestHtmlUtils(unittest.TestCase):
 
         expected_papers = [
             {
-                'url': 'paper_url',
-                'title': 'title',
+                'id':      'authoryear',
+                'url':     'paper_url',
+                'title':   'title',
                 'authors': ['author'],
-                'year': 'year',
+                'year':    'year',
             }
         ]
 
