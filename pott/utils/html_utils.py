@@ -24,4 +24,5 @@ def extract_paper_from(pq_div):
     for author in match.group(1).split(', '):
         paper['authors'].append(re.sub(r'<a.+?>|</a>', '', author))
     paper['year'] = match.group(2)
+    paper['id'] = paper['authors'][0].split(' ')[-1] + paper['year']
     return paper
