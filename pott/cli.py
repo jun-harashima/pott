@@ -57,5 +57,12 @@ def _set_logger():
     return logger
 
 
+@main.command()
+def reindex():
+    librarian = Librarian()
+    librarian.reindex()
+    return 0
+
+
 if __name__ == "__main__":
     sys.exit(main())
