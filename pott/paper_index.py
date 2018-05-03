@@ -20,8 +20,10 @@ class PaperIndex:
         shutil.rmtree(self.__INDEX_DIR)
         self._create()
 
-        for id, paper in paper_by_id.items():
-            self.save(Paper(paper['url'], paper['title']), id, id + '.txt')
+        for value in paper_by_id.values():
+            paper = Paper(value['url'], value['title'], value['authors'],
+                          value['year'])
+            self.save(paper)
 
     def _create(self):
         os.makedirs(self.__INDEX_DIR)
@@ -29,11 +31,11 @@ class PaperIndex:
                         content=TEXT(stored=True))
         create_in(self.__INDEX_DIR, schema)
 
-    def save(self, paper, paper_prefix, txt_name):
-        with open(self.__TXT_DIR + '/' + txt_name, 'r') as txt_file:
+    def save(self, paper):
+        with open(self.__TXT_DIR + '/' + paper.id + '.txt', 'r') as txt_file:
             index = open_dir(self.__INDEX_DIR)
             index_writer = index.writer()
-            index_writer.add_document(path=paper_prefix, title=paper.title,
+            index_writer.add_document(path=paper.id, title=paper.title,
                                       content=txt_file.read())
             index_writer.commit()
 
