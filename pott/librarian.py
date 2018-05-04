@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
-import os
 import requests
 from pyquery import PyQuery
 from pott.utils.html_utils import extract_papers_from
 from pott.utils.pdf import Pdf
+from pott.utils.text import Text
 from pott.utils.yaml import Yaml
 from pott.utils.paper_index import PaperIndex
 
@@ -12,12 +12,8 @@ from pott.utils.paper_index import PaperIndex
 class Librarian:
 
     __SCHOLAR_URL = "https://scholar.google.com/scholar"
-    __TXT_DIR = os.environ['HOME'] + '/.pott/txt'
 
     def __init__(self):
-        if not os.path.isdir(self.__TXT_DIR):
-            os.makedirs(self.__TXT_DIR)
-
         self.yaml = Yaml()
         self.index = PaperIndex()
 
@@ -34,15 +30,13 @@ class Librarian:
         if response.status_code != 200:
             return
 
-        txt_name = paper['id'] + '.txt'
-
         pdf = Pdf(paper['id'] + '.pdf')
         pdf.save(response.content)
-        text = pdf.extract_text()
-        with open(self.__TXT_DIR + '/' + txt_name, 'w') as txt_file:
-            txt_file.write(text)
 
-        self.index.save(paper, paper['id'], txt_name)
+        text = Text(paper['id'] + '.txt')
+        text.save(pdf.extract_text())
+
+        self.index.save(paper, paper['id'], paper['id'] + '.txt')
         self.yaml.update(paper)
 
     def local_search(self, keywords):
