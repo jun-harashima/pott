@@ -13,9 +13,9 @@ def _is_valid_input(user_input, papers):
         return True
     elif re.match(r'[0-9]', user_input) is None:
         return False
-    elif papers[int(user_input)]['url'] is None:
+    elif papers[int(user_input)].url is None:
         return False
-    elif papers[int(user_input)]['authors'] == []:
+    elif papers[int(user_input)].authors == []:
         return False
     else:
         return True

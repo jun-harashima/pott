@@ -16,5 +16,10 @@ class Yaml:
             paper_by_id = yaml.load(file)
 
         with open(self.YAML_FILE, 'w') as file:
-            paper_by_id[paper['id']] = paper
+            paper_by_id[paper.id] = {
+                'url': paper.url,
+                'title': paper.title,
+                'authors': paper.authors,
+                'year': paper.year,
+            }
             yaml.dump(paper_by_id, file, default_flow_style=False)

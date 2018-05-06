@@ -1,4 +1,5 @@
 import os
+from pott.utils.paper import Paper
 from whoosh.fields import Schema, ID, TEXT
 from whoosh.filedb.filestore import FileStorage
 from whoosh.index import create_in, open_dir
@@ -21,7 +22,7 @@ class PaperIndex:
         with open(self.__TXT_DIR + '/' + txt_name, 'r') as txt_file:
             index = open_dir(self.__INDEX_DIR)
             index_writer = index.writer()
-            index_writer.add_document(path=paper_prefix, title=paper['title'],
+            index_writer.add_document(path=paper_prefix, title=paper.title,
                                       content=txt_file.read())
             index_writer.commit()
 
@@ -34,11 +35,6 @@ class PaperIndex:
         with index.searcher() as searcher:
             results = searcher.search(query)
             for result in results:
-                paper = {
-                    'url': '',
-                    'title': result['title'],
-                    'authors': [],
-                    'year': 0,
-                }
+                paper = Paper('', result['title'])
                 papers.append(paper)
         return papers

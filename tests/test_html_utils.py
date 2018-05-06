@@ -1,6 +1,6 @@
 import unittest
-from pyquery import PyQuery
 from pott.utils.html_utils import extract_papers_from
+from pyquery import PyQuery
 
 
 class TestHtmlUtils(unittest.TestCase):
@@ -9,29 +9,22 @@ class TestHtmlUtils(unittest.TestCase):
         <html>
           <div class="gs_r gs_or gs_scl">
             <div class="gs_ggs gs_fl">
-              <a href="paper_url"></a>
+              <a href="https://smith2018.pdf"></a>
             </div>
             <div class="gs_ri">
-              <h3>title</h3>
-              <div class="gs_a">author - conference, year - site_url</div>
+              <h3>Awesome Study in 2018</h3>
+              <div class="gs_a">John Smith - conference, 2018 - site_url</div>
             </div>
           </div>
         </html>
         """
 
-        expected_papers = [
-            {
-                'id':      'authoryear',
-                'url':     'paper_url',
-                'title':   'title',
-                'authors': ['author'],
-                'year':    'year',
-            }
-        ]
-
         pq_html = PyQuery(html)
         papers = extract_papers_from(pq_html)
-        self.assertEqual(papers, expected_papers)
+        self.assertEqual(papers[0].url, 'https://smith2018.pdf')
+        self.assertEqual(papers[0].title, 'Awesome Study in 2018')
+        self.assertEqual(papers[0].authors, ['John Smith'])
+        self.assertEqual(papers[0].year, '2018')
 
 
 if __name__ == "__main__":

@@ -23,20 +23,20 @@ class Librarian:
         return papers
 
     def save(self, paper):
-        print('downloading "' + paper['title'] + '"')
+        print('downloading "' + paper.title + '"')
 
-        response = requests.get(paper['url'], timeout=10)
+        response = requests.get(paper.url, timeout=10)
 
         if response.status_code != 200:
             return
 
-        pdf = Pdf(paper['id'] + '.pdf')
+        pdf = Pdf(paper.id + '.pdf')
         pdf.save(response.content)
 
-        text = Text(paper['id'] + '.txt')
+        text = Text(paper.id + '.txt')
         text.save(pdf.extract_text())
 
-        self.index.save(paper, paper['id'], paper['id'] + '.txt')
+        self.index.save(paper, paper.id, paper.id + '.txt')
         self.yaml.update(paper)
 
     def local_search(self, keywords):
