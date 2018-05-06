@@ -58,8 +58,8 @@ def _set_logger():
 
 def _show_results(papers):
     for index, paper in enumerate(papers):
-        print('[' + str(index) + '] ' + paper['title'])
-        print('    ' + ', '.join(paper['authors']))
+        print('[' + str(index) + '] ' + paper.title)
+        print('    ' + ', '.join(paper.authors))
 
 
 if __name__ == "__main__":
