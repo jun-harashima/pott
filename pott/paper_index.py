@@ -9,15 +9,15 @@ from whoosh.qparser import QueryParser
 
 class PaperIndex:
 
-    __TXT_DIR = os.environ['HOME'] + '/.pott/txt'
-    __INDEX_DIR = os.environ['HOME'] + '/.pott/index'
+    TXT_DIR = os.environ['HOME'] + '/.pott/txt'
+    INDEX_DIR = os.environ['HOME'] + '/.pott/index'
 
     def __init__(self):
-        if not os.path.isdir(self.__INDEX_DIR):
+        if not os.path.isdir(self.INDEX_DIR):
             self._create()
 
     def reindex(self, paper_by_id):
-        shutil.rmtree(self.__INDEX_DIR)
+        shutil.rmtree(self.INDEX_DIR)
         self._create()
 
         for value in paper_by_id.values():
@@ -26,21 +26,21 @@ class PaperIndex:
             self.save(paper)
 
     def _create(self):
-        os.makedirs(self.__INDEX_DIR)
+        os.makedirs(self.INDEX_DIR)
         schema = Schema(path=ID(unique=True), title=TEXT(stored=True),
                         content=TEXT(stored=True))
-        create_in(self.__INDEX_DIR, schema)
+        create_in(self.INDEX_DIR, schema)
 
     def save(self, paper):
-        with open(self.__TXT_DIR + '/' + paper.id + '.txt', 'r') as txt_file:
-            index = open_dir(self.__INDEX_DIR)
+        with open(self.TXT_DIR + '/' + paper.id + '.txt', 'r') as txt_file:
+            index = open_dir(self.INDEX_DIR)
             index_writer = index.writer()
             index_writer.add_document(path=paper.id, title=paper.title,
                                       content=txt_file.read())
             index_writer.commit()
 
     def search(self, keywords):
-        storage = FileStorage(self.__INDEX_DIR)
+        storage = FileStorage(self.INDEX_DIR)
         index = storage.open_index()
         query_parser = QueryParser("title", schema=index.schema)
         query = query_parser.parse(' '.join(keywords))
