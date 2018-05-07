@@ -1,5 +1,5 @@
 import os
-from pott.utils.file import File
+from pott.files.file import File
 
 
 class Text(File):

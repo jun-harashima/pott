@@ -1,5 +1,5 @@
 import re
-from pott.utils.paper import Paper
+from pott.paper import Paper
 from pyquery import PyQuery
 
 

@@ -1,6 +1,6 @@
 import unittest
+from pott.paper import Paper
 from pott.utils.input_utils import _is_valid_input
-from pott.utils.paper import Paper
 
 
 class TestInputUtils(unittest.TestCase):
