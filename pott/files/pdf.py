@@ -4,7 +4,7 @@ from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
 from pdfminer.pdfpage import PDFPage
 from io import StringIO
-from pott.utils.file import File
+from pott.files.file import File
 
 
 class Pdf(File):

@@ -2,8 +2,8 @@ import os
 import unittest
 import yaml
 from unittest.mock import patch
-from pott.utils.paper import Paper
-from pott.utils.yaml import Yaml
+from pott.paper import Paper
+from pott.yaml import Yaml
 
 TEST_FILE = 'test.yaml'
 
@@ -25,7 +25,7 @@ class TestYaml(unittest.TestCase):
     def tearDown(self):
         os.remove(TEST_FILE)
 
-    @patch('pott.utils.yaml.Yaml.YAML_FILE', TEST_FILE)
+    @patch('pott.yaml.Yaml.YAML_FILE', TEST_FILE)
     def test_update(self):
         Yaml().update(PAPER2)
         with open(TEST_FILE, 'r') as file:

@@ -2,11 +2,11 @@
 
 import requests
 from pyquery import PyQuery
+from pott.paper_index import PaperIndex
+from pott.yaml import Yaml
+from pott.files.pdf import Pdf
+from pott.files.text import Text
 from pott.utils.html_utils import extract_papers_from
-from pott.utils.pdf import Pdf
-from pott.utils.text import Text
-from pott.utils.yaml import Yaml
-from pott.utils.paper_index import PaperIndex
 
 
 class Librarian:

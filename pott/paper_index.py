@@ -1,5 +1,5 @@
 import os
-from pott.utils.paper import Paper
+from pott.paper import Paper
 from whoosh.fields import Schema, ID, TEXT
 from whoosh.filedb.filestore import FileStorage
 from whoosh.index import create_in, open_dir
