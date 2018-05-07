@@ -101,5 +101,4 @@ ENV/
 .mypy_cache/
 
 # pott
-log.txt
 .idea/

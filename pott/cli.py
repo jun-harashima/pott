@@ -6,9 +6,7 @@ import requests
 import sys
 from pott.librarian import Librarian
 from pott.utils.input_utils import get_user_input, select
-
-
-LOG_FILE = 'log.txt'
+from pott.utils.log import logger
 
 
 @click.group()
@@ -28,7 +26,6 @@ def search(target, keywords):
 
 
 def _global_search(keywords):
-    logger = _set_logger()
     librarian = Librarian()
     papers = librarian.global_search(keywords)
     _show_results(papers)
@@ -38,7 +35,7 @@ def _global_search(keywords):
         try:
             librarian.save(paper)
         except requests.ConnectionError as e:
-            logger.log(40, str(e))
+            logger.warn(str(e))
     return 0
 
 
@@ -47,13 +44,6 @@ def _local_search(keywords):
     papers = librarian.local_search(keywords)
     _show_results(papers)
     return 0
-
-
-def _set_logger():
-    logger = logging.getLogger(__name__)
-    fh = logging.FileHandler(LOG_FILE)
-    logger.addHandler(fh)
-    return logger
 
 
 def _show_results(papers):
