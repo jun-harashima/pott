@@ -6,6 +6,7 @@ import requests
 import sys
 from pott.librarian import Librarian
 from pott.utils.input_utils import get_user_input, select
+from pott.utils.output_utils import show_results
 
 
 LOG_FILE = 'log.txt'
@@ -31,7 +32,7 @@ def _global_search(keywords):
     logger = _set_logger()
     librarian = Librarian()
     papers = librarian.global_search(keywords)
-    _show_results(papers)
+    show_results(papers)
     user_input = get_user_input(papers)
     selected_papers = select(papers, user_input)
     for paper in selected_papers:
@@ -45,7 +46,7 @@ def _global_search(keywords):
 def _local_search(keywords):
     librarian = Librarian()
     papers = librarian.local_search(keywords)
-    _show_results(papers)
+    show_results(papers)
     return 0
 
 
@@ -54,12 +55,6 @@ def _set_logger():
     fh = logging.FileHandler(LOG_FILE)
     logger.addHandler(fh)
     return logger
-
-
-def _show_results(papers):
-    for index, paper in enumerate(papers):
-        print('[' + str(index) + '] ' + paper.title)
-        print('    ' + ', '.join(paper.authors))
 
 
 if __name__ == "__main__":
