@@ -42,3 +42,7 @@ class Librarian:
     def local_search(self, keywords):
         papers = self.index.search(keywords)
         return papers
+
+    def reindex(self):
+        paper_by_id = self.yaml.load()
+        self.index.reindex(paper_by_id)

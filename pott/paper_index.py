@@ -1,4 +1,5 @@
 import os
+import shutil
 from pott.paper import Paper
 from whoosh.fields import Schema, ID, TEXT
 from whoosh.filedb.filestore import FileStorage
@@ -13,10 +14,20 @@ class PaperIndex:
 
     def __init__(self):
         if not os.path.isdir(self.__INDEX_DIR):
-            os.makedirs(self.__INDEX_DIR)
-            schema = Schema(path=ID(unique=True), title=TEXT(stored=True),
-                            content=TEXT(stored=True))
-            create_in(self.__INDEX_DIR, schema)
+            self._create()
+
+    def reindex(self, paper_by_id):
+        shutil.rmtree(self.__INDEX_DIR)
+        self._create()
+
+        for id, paper in paper_by_id.items():
+            self.save(Paper(paper['url'], paper['title']), id, id + '.txt')
+
+    def _create(self):
+        os.makedirs(self.__INDEX_DIR)
+        schema = Schema(path=ID(unique=True), title=TEXT(stored=True),
+                        content=TEXT(stored=True))
+        create_in(self.__INDEX_DIR, schema)
 
     def save(self, paper, paper_prefix, txt_name):
         with open(self.__TXT_DIR + '/' + txt_name, 'r') as txt_file:
