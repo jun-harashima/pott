@@ -1,5 +1,6 @@
 import os
 import yaml
+from pott.paper import Paper
 
 
 class Yaml:
@@ -12,16 +13,23 @@ class Yaml:
                 yaml.dump({}, file, default_flow_style=False)
 
     def update(self, paper):
-        paper_by_id = self.load()
+        dict = self._load_in_dictionary_form()
         with open(self.YAML_FILE, 'w') as file:
-            paper_by_id[paper.id] = {
+            dict[paper.id] = {
                 'url': paper.url,
                 'title': paper.title,
                 'authors': paper.authors,
                 'year': paper.year,
             }
-            yaml.dump(paper_by_id, file, default_flow_style=False)
+            yaml.dump(dict, file, default_flow_style=False)
 
     def load(self):
+        paper_by_id = {}
+        for key, value in self._load_in_dictionary_form().items():
+            paper_by_id[key] = Paper(value['url'], value['title'],
+                                     value['authors'], value['year'])
+        return paper_by_id
+
+    def _load_in_dictionary_form(self):
         with open(self.YAML_FILE, 'r') as file:
             return yaml.load(file)
