@@ -58,6 +58,14 @@ def _set_logger():
 
 
 @main.command()
+def list():
+    librarian = Librarian()
+    papers = librarian.list()
+    show_results(papers)
+    return 0
+
+
+@main.command()
 def reindex():
     librarian = Librarian()
     librarian.reindex()
