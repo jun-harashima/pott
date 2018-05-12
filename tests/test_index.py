@@ -8,7 +8,7 @@ TEST_TXT_DIR = './tests/txt'
 TEST_INDEX_DIR = './tests/index'
 
 PAPER1_CONTENT = 'This paper describes my awesome study in 2017'
-PAPER2_CONTENT = 'This paper describes my awesome study in 2018'
+PAPER2_CONTENT = 'This paper introduces my awesome study in 2018'
 
 
 class TestIndex(unittest.TestCase):
@@ -42,6 +42,9 @@ class TestIndex(unittest.TestCase):
 
         papers = Index().search(['Awesome'], 1)
         self.assertEqual(len(papers), 2)
+
+        papers = Index().search(['title:Awesome', 'content:introduces'], 1)
+        self.assertEqual(len(papers), 1)
 
 
 if __name__ == "__main__":
