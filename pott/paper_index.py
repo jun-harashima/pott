@@ -20,9 +20,7 @@ class PaperIndex:
         shutil.rmtree(self.INDEX_DIR)
         self._create()
 
-        for value in paper_by_id.values():
-            paper = Paper(value['url'], value['title'], value['authors'],
-                          value['year'])
+        for paper in paper_by_id.values():
             self.save(paper)
 
     def _create(self):
