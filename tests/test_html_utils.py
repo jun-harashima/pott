@@ -12,7 +12,7 @@ class TestHtmlUtils(unittest.TestCase):
               <a href="https://smith2018.pdf"></a>
             </div>
             <div class="gs_ri">
-              <h3>Awesome Study in 2018</h3>
+              <h3><a>Awesome Study in 2018</a></h3>
               <div class="gs_a">John Smith - conference, 2018 - site_url</div>
             </div>
           </div>
