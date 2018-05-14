@@ -7,6 +7,9 @@ from pott.paper import Paper
 TEST_TXT_DIR = './tests/txt'
 TEST_INDEX_DIR = './tests/index'
 
+PAPER1_CONTENT = 'This paper describes my awesome study in 2017'
+PAPER2_CONTENT = 'This paper describes my awesome study in 2018'
+
 
 class TestPaperIndex(unittest.TestCase):
 
@@ -22,8 +25,8 @@ class TestPaperIndex(unittest.TestCase):
     @patch('pott.paper_index.PaperIndex.TXT_DIR', TEST_TXT_DIR)
     @patch('pott.paper_index.PaperIndex.INDEX_DIR', TEST_INDEX_DIR)
     def test_search(self):
-        PaperIndex().save(self.paper1)
-        PaperIndex().save(self.paper2)
+        PaperIndex()._save(self.paper1, PAPER1_CONTENT)
+        PaperIndex()._save(self.paper2, PAPER2_CONTENT)
 
         papers = PaperIndex().search(['2017'])
         self.assertEqual(len(papers), 1)
