@@ -31,10 +31,14 @@ class TestPaperIndex(unittest.TestCase):
         papers = PaperIndex().search(['2017'])
         self.assertEqual(len(papers), 1)
         self.assertEqual(papers[0].title, 'Awesome Study in 2017')
+        self.assertEqual(papers[0].authors[0], 'John Smith')
+        self.assertEqual(papers[0].year, '2017')
 
         papers = PaperIndex().search(['2018'])
         self.assertEqual(len(papers), 1)
         self.assertEqual(papers[0].title, 'Awesome Study in 2018')
+        self.assertEqual(papers[0].authors[0], 'John Smith')
+        self.assertEqual(papers[0].year, '2018')
 
         papers = PaperIndex().search(['Awesome'])
         self.assertEqual(len(papers), 2)
