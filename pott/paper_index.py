@@ -33,11 +33,14 @@ class PaperIndex:
 
     def save(self, paper):
         with open(self.TXT_DIR + '/' + paper.id + '.txt', 'r') as txt_file:
-            index = open_dir(self.INDEX_DIR)
-            index_writer = index.writer()
-            index_writer.add_document(path=paper.id, title=paper.title,
-                                      content=txt_file.read())
-            index_writer.commit()
+            self._save_content(paper, txt_file.read())
+
+    def _save_content(self, paper, content):
+        index = open_dir(self.INDEX_DIR)
+        index_writer = index.writer()
+        index_writer.add_document(path=paper.id, title=paper.title,
+                                  content=content)
+        index_writer.commit()
 
     def search(self, keywords):
         storage = FileStorage(self.INDEX_DIR)
