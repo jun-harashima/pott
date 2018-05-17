@@ -1,7 +1,7 @@
 import os
 import shutil
 from pott.paper import Paper
-from whoosh.fields import Schema, ID, TEXT
+from whoosh.fields import Schema, ID, KEYWORD, TEXT
 from whoosh.filedb.filestore import FileStorage
 from whoosh.index import create_in, open_dir
 from whoosh.qparser import QueryParser
@@ -25,8 +25,10 @@ class PaperIndex:
 
     def _create(self):
         os.makedirs(self.INDEX_DIR)
-        schema = Schema(path=ID(unique=True), title=TEXT(stored=True),
-                        content=TEXT(stored=True))
+        schema = Schema(id=ID(unique=True), title=TEXT(stored=True),
+                        content=TEXT(stored=True),
+                        authors=KEYWORD(stored=True, commas=True),
+                        year=ID(stored=True))
         create_in(self.INDEX_DIR, schema)
 
     def save(self, paper):
@@ -36,8 +38,10 @@ class PaperIndex:
     def _save_content(self, paper, content):
         index = open_dir(self.INDEX_DIR)
         index_writer = index.writer()
-        index_writer.add_document(path=paper.id, title=paper.title,
-                                  content=content)
+        index_writer.add_document(id=paper.id, title=paper.title,
+                                  content=content,
+                                  authors=','.join(paper.authors),
+                                  year=paper.year)
         index_writer.commit()
 
     def search(self, keywords):
@@ -49,6 +53,7 @@ class PaperIndex:
         with index.searcher() as searcher:
             results = searcher.search(query)
             for result in results:
-                paper = Paper('', result['title'])
+                paper = Paper('', result['title'],
+                              result['authors'].split(','), result['year'])
                 papers.append(paper)
         return papers
