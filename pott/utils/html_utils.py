@@ -17,12 +17,12 @@ def extract_papers_from(pq_html):
 
 def extract_paper_from(pq_div):
     url = pq_div.find('div.gs_ggs.gs_fl a').attr('href')
-    title = pq_div.find('div.gs_ri h3').text()
+    title = pq_div.find('div.gs_ri h3 a').text()
     match = re.search(__GS_A_REGEXP, pq_div.find('.gs_a').html())
     if not match:
         return Paper(url, title)
     authors = []
     for author in match.group(1).split(', '):
-        authors.append(re.sub(r'<a.+?>|</a>', '', author))
+        authors.append(re.sub(r'<a.+?>|</a>|<b>|</b>', '', author))
     year = match.group(2)
     return Paper(url, title, authors, year)
