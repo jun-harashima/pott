@@ -33,8 +33,8 @@ def _global_search(keywords):
     librarian = Librarian()
     papers = librarian.global_search(keywords)
     show_results(papers)
-    user_input = get_user_input(papers)
-    selected_papers = select(papers, user_input)
+    inputted_ids = get_user_input(papers)
+    selected_papers = select(papers, inputted_ids)
     for paper in selected_papers:
         try:
             librarian.save(paper)
