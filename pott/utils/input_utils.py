@@ -1,29 +1,25 @@
 import re
 
+PROMPT = 'Select ID for papers to download [0-9,]: '
+
 
 def get_user_input(papers):
-    user_input = input('Paper to download [0-9] or all: ')
-    while not _is_valid_input(user_input, papers):
-        user_input = input('Paper to download [0-9] or all: ')
-    return user_input
+    inputted_ids = input(PROMPT)
+    while not _is_valid(inputted_ids):
+        inputted_ids = input(PROMPT)
+    return [int(id) for id in inputted_ids.split(',')]
 
 
-def _is_valid_input(user_input, papers):
-    if user_input == 'all':
-        return True
-    elif re.match(r'[0-9]', user_input) is None:
-        return False
-    elif papers[int(user_input)].url is None:
-        return False
-    elif papers[int(user_input)].authors == []:
+def _is_valid(inputted_ids):
+    if re.match(r'^[0-9,]+$', inputted_ids) is None:
         return False
     else:
         return True
 
 
-def select(papers, user_input):
-    if user_input == 'all':
-        return [paper for paper in papers
-                if not paper['url'] is None and not paper['authors'] == []]
-    else:
-        return [papers[int(user_input)]]
+def select(papers, inputted_ids):
+    selected_papers = []
+    for id in inputted_ids:
+        if papers[id].url is not None and papers[id].authors != []:
+            selected_papers.append(papers[id])
+    return selected_papers
