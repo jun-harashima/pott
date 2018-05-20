@@ -1,7 +1,7 @@
 import shutil
 import unittest
 from unittest.mock import patch
-from pott.paper_index import PaperIndex
+from pott.index import Index
 from pott.paper import Paper
 
 TEST_TXT_DIR = './tests/txt'
@@ -11,7 +11,7 @@ PAPER1_CONTENT = 'This paper describes my awesome study in 2017'
 PAPER2_CONTENT = 'This paper describes my awesome study in 2018'
 
 
-class TestPaperIndex(unittest.TestCase):
+class TestIndex(unittest.TestCase):
 
     def setUp(self):
         self.paper1 = Paper('https://smith2017.pdf', 'Awesome Study in 2017',
@@ -22,25 +22,25 @@ class TestPaperIndex(unittest.TestCase):
     def tearDown(self):
         shutil.rmtree(TEST_INDEX_DIR)
 
-    @patch('pott.paper_index.PaperIndex.TXT_DIR', TEST_TXT_DIR)
-    @patch('pott.paper_index.PaperIndex.INDEX_DIR', TEST_INDEX_DIR)
+    @patch('pott.index.Index.TXT_DIR', TEST_TXT_DIR)
+    @patch('pott.index.Index.INDEX_DIR', TEST_INDEX_DIR)
     def test_search(self):
-        PaperIndex()._save_content(self.paper1, PAPER1_CONTENT)
-        PaperIndex()._save_content(self.paper2, PAPER2_CONTENT)
+        Index()._save_content(self.paper1, PAPER1_CONTENT)
+        Index()._save_content(self.paper2, PAPER2_CONTENT)
 
-        papers = PaperIndex().search(['2017'])
+        papers = Index().search(['2017'])
         self.assertEqual(len(papers), 1)
         self.assertEqual(papers[0].title, 'Awesome Study in 2017')
         self.assertEqual(papers[0].authors[0], 'John Smith')
         self.assertEqual(papers[0].year, '2017')
 
-        papers = PaperIndex().search(['2018'])
+        papers = Index().search(['2018'])
         self.assertEqual(len(papers), 1)
         self.assertEqual(papers[0].title, 'Awesome Study in 2018')
         self.assertEqual(papers[0].authors[0], 'John Smith')
         self.assertEqual(papers[0].year, '2018')
 
-        papers = PaperIndex().search(['Awesome'])
+        papers = Index().search(['Awesome'])
         self.assertEqual(len(papers), 2)
 
 

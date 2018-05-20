@@ -7,7 +7,7 @@ from whoosh.index import create_in, open_dir
 from whoosh.qparser import QueryParser
 
 
-class PaperIndex:
+class Index:
 
     TXT_DIR = os.environ['HOME'] + '/.pott/txt'
     INDEX_DIR = os.environ['HOME'] + '/.pott/index'

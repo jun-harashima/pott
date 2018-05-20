@@ -2,7 +2,7 @@
 
 import requests
 from pyquery import PyQuery
-from pott.paper_index import PaperIndex
+from pott.index import Index
 from pott.yaml import Yaml
 from pott.files.pdf import Pdf
 from pott.files.text import Text
@@ -15,7 +15,7 @@ class Librarian:
 
     def __init__(self):
         self.yaml = Yaml()
-        self.index = PaperIndex()
+        self.index = Index()
 
     def global_search(self, keywords):
         pq_html = PyQuery(self.__SCHOLAR_URL + '?q=' + ' '.join(keywords))
