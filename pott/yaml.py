@@ -5,9 +5,13 @@ from pott.paper import Paper
 
 class Yaml:
 
+    DOT_DIR = os.environ['HOME'] + '/.pott'
     YAML_FILE = os.environ['HOME'] + '/.pott/paper.yaml'
 
     def __init__(self):
+        if not os.path.isdir(self.DOT_DIR):
+            os.mkdir(self.DOT_DIR)
+
         if not os.path.isfile(self.YAML_FILE):
             with open(self.YAML_FILE, 'w') as file:
                 yaml.dump({}, file, default_flow_style=False)
