@@ -4,8 +4,6 @@ import requests
 from pyquery import PyQuery
 from pott.index import Index
 from pott.yaml import Yaml
-from pott.files.pdf import Pdf
-from pott.files.text import Text
 from pott.utils.html_utils import extract_papers_from
 
 
@@ -30,12 +28,8 @@ class Librarian:
         self._save(paper, response)
 
     def _save(self, paper, response):
-        pdf = Pdf(paper.id + '.pdf')
-        pdf.save(response.content)
-
-        text = Text(paper.id + '.txt')
-        text.save(pdf.extract_text())
-
+        paper.pdf.save(response.content)
+        paper.text.save(paper.pdf.extract_text())
         self.index.save(paper)
         self.yaml.update(paper)
 
