@@ -6,17 +6,12 @@ pott
 ====
 
 
-Pott related commands on terminal
+.. include:: docs/introduction.rst
 
 
 * Free software: MIT license
 * Documentation: https://pott.readthedocs.io.
 
-
-Features
---------
-
-* TODO
 
 Credits
 -------
