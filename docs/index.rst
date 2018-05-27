@@ -1,13 +1,16 @@
-Welcome to pott's documentation!
+pott
 ======================================
 
+.. include:: introduction.rst
+
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Contents:
 
-   readme
+   introduction
    installation
-   usage
+   global_search
+   local_search
    modules
    contributing
    authors
