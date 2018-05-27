@@ -32,6 +32,7 @@ class Librarian:
         paper.text.save(paper.pdf.extract_text())
         self.index.save(paper)
         self.yaml.update(paper)
+        print('saved in the following location:\n' + paper.pdf.file_path)
 
     def local_search(self, keywords):
         papers = self.index.search(keywords)
