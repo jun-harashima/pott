@@ -3,7 +3,7 @@ from pott.paper import Paper
 from pyquery import PyQuery
 
 
-__GS_A_REGEXP = re.compile(r'(.+?)(?:&#8230;)? - .+?, (.+?) - .+?')
+__GS_A_REGEXP = re.compile(r'(.+?)(?:&#8230;)? - .+?, ([0-9]+?) - .+?')
 
 
 def extract_papers_from(pq_html):
