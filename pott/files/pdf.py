@@ -5,6 +5,7 @@ from pdfminer.layout import LAParams
 from pdfminer.pdfpage import PDFPage
 from io import StringIO
 from pott.files.file import File
+from pott.utils.log import logger
 
 
 class Pdf(File):
@@ -30,5 +31,8 @@ class Pdf(File):
                                    laparams=laparams)
             interpreter = PDFPageInterpreter(manager, device)
             for page in PDFPage.get_pages(file):
-                interpreter.process_page(page)
+                try:
+                    interpreter.process_page(page)
+                except ValueError as e:
+                    logger.warn(str(e))
             return stringio.getvalue()
