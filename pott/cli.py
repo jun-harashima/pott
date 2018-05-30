@@ -18,16 +18,18 @@ def main():
 @click.option('--global', '-g', 'target', flag_value='global', default=True)
 @click.option('--local', '-l', 'target', flag_value='local')
 @click.argument('keywords', nargs=-1)
-def search(target, keywords):
+@click.option('--year-low', '-yl', 'year_low')
+@click.option('--year-high', '-yh', 'year_high')
+def search(target, keywords, year_low, year_high):
     if target == 'global':
-        _global_search(keywords)
+        _global_search(keywords, year_low, year_high)
     elif target == 'local':
         _local_search(keywords)
 
 
-def _global_search(keywords):
+def _global_search(keywords, year_low, year_high):
     librarian = Librarian()
-    papers = librarian.global_search(keywords)
+    papers = librarian.global_search(keywords, year_low, year_high)
     show_results(papers)
     requested_ids = get_requested_ids(papers)
     for paper in [papers[id] for id in requested_ids]:
