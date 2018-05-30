@@ -4,7 +4,7 @@ import click
 import requests
 import sys
 from pott.librarian import Librarian
-from pott.utils.input_utils import get_user_input, select
+from pott.utils.input_utils import get_requested_ids
 from pott.utils.output_utils import show_results
 from pott.utils.log import logger
 
@@ -29,9 +29,8 @@ def _global_search(keywords):
     librarian = Librarian()
     papers = librarian.global_search(keywords)
     show_results(papers)
-    inputted_ids = get_user_input(papers)
-    selected_papers = select(papers, inputted_ids)
-    for paper in selected_papers:
+    requested_ids = get_requested_ids(papers)
+    for paper in [papers[id] for id in requested_ids]:
         try:
             librarian.save(paper)
         except requests.ConnectionError as e:

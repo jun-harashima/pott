@@ -1,25 +1,11 @@
-import re
-
-PROMPT = 'Select ID for papers to download [0-9,]: '
-
-
-def get_user_input(papers):
-    inputted_ids = input(PROMPT)
-    while not _is_valid(inputted_ids):
-        inputted_ids = input(PROMPT)
-    return [int(id) for id in inputted_ids.split(',')]
+FIRST_PROMPT = 'Select paper IDs to download [0-9,]: '
+SECOND_PROMPT = 'Select available paper IDs [0-9,]: '
 
 
-def _is_valid(inputted_ids):
-    if re.match(r'^[0-9,]+$', inputted_ids) is None:
-        return False
-    else:
-        return True
-
-
-def select(papers, inputted_ids):
-    selected_papers = []
-    for id in inputted_ids:
-        if papers[id].url is not None and papers[id].authors != []:
-            selected_papers.append(papers[id])
-    return selected_papers
+def get_requested_ids(papers):
+    available_ids = [str(id) for id, paper in enumerate(papers)
+                     if paper.url is not None and paper.authors != []]
+    requested_ids = [id for id in input(FIRST_PROMPT).split(',')]
+    while not set(requested_ids).issubset(set(available_ids)):
+        requested_ids = [id for id in input(SECOND_PROMPT).split(',')]
+    return [int(id) for id in requested_ids]
