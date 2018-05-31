@@ -15,10 +15,19 @@ class Librarian:
         self.yaml = Yaml()
         self.index = Index()
 
-    def global_search(self, keywords):
-        pq_html = PyQuery(self.__SCHOLAR_URL + '?q=' + ' '.join(keywords))
+    def global_search(self, keywords, year_low, year_high):
+        url = self._set_url(keywords, year_low, year_high)
+        pq_html = PyQuery(url)
         papers = extract_papers_from(pq_html)
         return papers
+
+    def _set_url(self, keywords, year_low, year_high):
+        url = self.__SCHOLAR_URL + '?q=' + ' '.join(keywords)
+        if year_low is not None:
+            url += '&as_ylo=' + year_low
+        if year_high is not None:
+            url += '&as_yhi=' + year_high
+        return url
 
     def save(self, paper):
         print('downloading "' + paper.title + '"')
