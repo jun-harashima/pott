@@ -16,24 +16,28 @@ class TestInputUtils(unittest.TestCase):
 
         # Basic usage
         with unittest.mock.patch('builtins.input', side_effect=['0']):
-            self.assertEqual(get_requested_ids(papers), [0])
+            self.assertEqual(get_requested_ids(papers), ([0], None))
 
         # Multiple download
         with unittest.mock.patch('builtins.input', side_effect=['0,1']):
-            self.assertEqual(get_requested_ids(papers), [0, 1])
+            self.assertEqual(get_requested_ids(papers), ([0, 1], None))
 
         # Ignore unavailable papers
         with unittest.mock.patch('builtins.input', side_effect=['2', '0']):
-            self.assertEqual(get_requested_ids(papers), [0])
+            self.assertEqual(get_requested_ids(papers), ([0], None))
 
         # Ignore unavailable papers
         with unittest.mock.patch('builtins.input', side_effect=['0,2', '0']):
-            self.assertEqual(get_requested_ids(papers), [0])
+            self.assertEqual(get_requested_ids(papers), ([0], None))
 
         # Ignore invalid IDs
         with unittest.mock.patch('builtins.input', side_effect=['a', '0']):
-            self.assertEqual(get_requested_ids(papers), [0])
+            self.assertEqual(get_requested_ids(papers), ([0], None))
 
         # Ignore invalid IDs
         with unittest.mock.patch('builtins.input', side_effect=['0,a', '0']):
-            self.assertEqual(get_requested_ids(papers), [0])
+            self.assertEqual(get_requested_ids(papers), ([0], None))
+
+        # Quit
+        with unittest.mock.patch('builtins.input', side_effect=['quit']):
+            self.assertEqual(get_requested_ids(papers), ([], 'quit'))

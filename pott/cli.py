@@ -4,7 +4,7 @@ import click
 import requests
 import sys
 from pott.librarian import Librarian
-from pott.utils.input_utils import get_requested_ids
+from pott.utils.input_utils import get_requested_ids, QUIT_INPUTS
 from pott.utils.output_utils import show_results
 from pott.utils.log import logger
 
@@ -31,7 +31,9 @@ def _global_search(keywords, year_low, year_high):
     librarian = Librarian()
     papers = librarian.global_search(keywords, year_low, year_high)
     show_results(papers)
-    requested_ids = get_requested_ids(papers)
+    requested_ids, special_input = get_requested_ids(papers)
+    if special_input in QUIT_INPUTS:
+        return 0
     for paper in [papers[id] for id in requested_ids]:
         try:
             librarian.save(paper)
