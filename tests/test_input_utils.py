@@ -41,3 +41,7 @@ class TestInputUtils(unittest.TestCase):
         # Quit
         with unittest.mock.patch('builtins.input', side_effect=['quit']):
             self.assertEqual(get_requested_ids(papers), ([], 'quit'))
+
+        # Next
+        with unittest.mock.patch('builtins.input', side_effect=['next']):
+            self.assertEqual(get_requested_ids(papers), ([], 'next'))
