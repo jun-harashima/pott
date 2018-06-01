@@ -1,8 +1,9 @@
-FIRST_PROMPT = 'Input a paper ID or q (quit): '
-SECOND_PROMPT = 'Input an available paper ID or q (quit): '
+FIRST_PROMPT = 'Input paper IDs, quit or next: '
+SECOND_PROMPT = 'Input available paper IDs, quit or next: '
 
 QUIT_INPUTS = ['quit', 'q']
-SPECIAL_INPUTS = QUIT_INPUTS
+NEXT_INPUTS = ['next', 'n']
+SPECIAL_INPUTS = QUIT_INPUTS + NEXT_INPUTS
 
 
 def get_requested_ids(papers):

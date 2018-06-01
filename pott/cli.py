@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 
 import click
-import requests
 import sys
 from pott.librarian import Librarian
-from pott.utils.input_utils import get_requested_ids, QUIT_INPUTS
+from pott.utils.input_utils import get_requested_ids, NEXT_INPUTS, QUIT_INPUTS
 from pott.utils.output_utils import show_results
-from pott.utils.log import logger
 
 
 @click.group()
@@ -20,26 +18,30 @@ def main():
 @click.argument('keywords', nargs=-1)
 @click.option('--year-low', '-yl', 'year_low')
 @click.option('--year-high', '-yh', 'year_high')
-def search(target, keywords, year_low, year_high):
+@click.option('--start', '-s', 'start', default=0)
+def search(target, keywords, year_low, year_high, start):
     if target == 'global':
-        _global_search(keywords, year_low, year_high)
+        _global_search(keywords, year_low, year_high, start)
     elif target == 'local':
         _local_search(keywords)
 
 
-def _global_search(keywords, year_low, year_high):
+def _global_search(keywords, year_low, year_high, start):
     librarian = Librarian()
-    papers = librarian.global_search(keywords, year_low, year_high)
-    show_results(papers)
-    requested_ids, special_input = get_requested_ids(papers)
-    if special_input in QUIT_INPUTS:
-        return 0
-    for paper in [papers[id] for id in requested_ids]:
-        try:
-            librarian.save(paper)
-        except requests.ConnectionError as e:
-            logger.warn(str(e))
-    return 0
+    papers = []
+    while True:
+        _papers = librarian.global_search(keywords, start, year_low, year_high)
+        show_results(_papers, start)
+        papers.extend(_papers)
+        requested_ids, special_input = get_requested_ids(papers)
+        if special_input in NEXT_INPUTS:
+            start += 10
+        elif special_input in QUIT_INPUTS:
+            return 0
+        else:
+            requested_papers = [papers[id] for id in requested_ids]
+            librarian.save(requested_papers)
+            return 0
 
 
 def _local_search(keywords):
