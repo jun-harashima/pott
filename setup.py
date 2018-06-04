@@ -44,7 +44,7 @@ setup(
     include_package_data=True,
     keywords='pott',
     name='pott',
-    packages=find_packages(include=['pott', 'pott.files', 'pott.utils']),
+    packages=find_packages(include=['pott', 'pott.assistants', 'pott.files', 'pott.utils']),
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
