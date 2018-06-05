@@ -14,6 +14,7 @@ class TestHtmlUtils(unittest.TestCase):
             <div class="gs_ri">
               <h3><a>Awesome Study in 2018</a></h3>
               <div class="gs_a">John Smith - conference, 2018 - site_url</div>
+              <div class="gs_fl">Cited by 100</div>
             </div>
           </div>
         </html>
@@ -25,6 +26,7 @@ class TestHtmlUtils(unittest.TestCase):
         self.assertEqual(papers[0].title, 'Awesome Study in 2018')
         self.assertEqual(papers[0].authors, ['John Smith'])
         self.assertEqual(papers[0].year, '2018')
+        self.assertEqual(papers[0].cited_by, '100')
 
 
 if __name__ == "__main__":
