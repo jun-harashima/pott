@@ -2,8 +2,8 @@
 
 import click
 import sys
+from pott.assistants.global_assistant import GlobalAssistant
 from pott.librarian import Librarian
-from pott.utils.input_utils import get_requested_ids, NEXT_INPUTS, QUIT_INPUTS
 from pott.utils.output_utils import show_results
 
 
@@ -21,27 +21,11 @@ def main():
 @click.option('--start', '-s', 'start', default=0)
 def search(target, keywords, year_low, year_high, start):
     if target == 'global':
-        _global_search(keywords, year_low, year_high, start)
+        assitant = GlobalAssistant()
+        assitant.search(keywords, year_low, year_high, start)
+        return 0
     elif target == 'local':
         _local_search(keywords)
-
-
-def _global_search(keywords, year_low, year_high, start):
-    librarian = Librarian()
-    papers = []
-    while True:
-        _papers = librarian.global_search(keywords, start, year_low, year_high)
-        show_results(_papers, start)
-        papers.extend(_papers)
-        requested_ids, special_input = get_requested_ids(papers)
-        if special_input in NEXT_INPUTS:
-            start += 10
-        elif special_input in QUIT_INPUTS:
-            return 0
-        else:
-            requested_papers = [papers[id] for id in requested_ids]
-            librarian.save(requested_papers)
-            return 0
 
 
 def _local_search(keywords):

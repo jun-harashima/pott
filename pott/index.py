@@ -21,6 +21,7 @@ class Index:
         self._create()
 
         for paper in paper_by_id.values():
+            print('indexing "' + paper.title + '"')
             self.save(paper)
 
     def _create(self):
@@ -32,7 +33,6 @@ class Index:
         create_in(self.INDEX_DIR, schema)
 
     def save(self, paper):
-        print('indexing "' + paper.title + '"')
         with open(self.TXT_DIR + '/' + paper.id + '.txt', 'r') as txt_file:
             self._save_content(paper, txt_file.read())
 
