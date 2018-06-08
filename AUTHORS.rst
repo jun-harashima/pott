@@ -10,4 +10,5 @@ Development Lead
 Contributors
 ------------
 
-None yet. Why not be the first?
+* Takahiko Ito <takahiko03@gmail.com>
+* And you!
