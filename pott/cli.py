@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import click
 import sys
 from pott.assistants.global_assistant import GlobalAssistant
@@ -13,15 +11,16 @@ def main():
 
 
 @main.command()
+@click.argument('keywords', nargs=-1)
 @click.option('--global', '-g', 'target', flag_value='global', default=True)
 @click.option('--local', '-l', 'target', flag_value='local')
-@click.argument('keywords', nargs=-1)
+@click.option('--start', '-s', 'start', default=0)
 @click.option('--year-low', '-yl', 'year_low')
 @click.option('--year-high', '-yh', 'year_high')
-@click.option('--start', '-s', 'start', default=0)
-def search(target, keywords, year_low, year_high, start):
+def search(keywords, target, start, year_low, year_high):
     assistant = LocalAssistant() if target == 'local' else GlobalAssistant()
-    assistant.search(keywords, year_low, year_high, start)
+    options = {'start': start, 'year_low': year_low, 'year_high': year_high}
+    assistant.search(keywords, options)
     return 0
 
 
