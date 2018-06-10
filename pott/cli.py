@@ -2,7 +2,6 @@ import click
 import sys
 from pott.assistants.global_assistant import GlobalAssistant
 from pott.assistants.local_assistant import LocalAssistant
-from pott.utils.output_utils import show_results
 
 
 @click.group()
@@ -27,8 +26,7 @@ def search(keywords, target, start, year_low, year_high):
 @main.command()
 def list():
     assistant = LocalAssistant()
-    papers = assistant.list()
-    show_results(papers)
+    assistant.list()
     return 0
 
 

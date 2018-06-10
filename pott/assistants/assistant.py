@@ -32,10 +32,10 @@ class Assistant:
             elif ch == curses.KEY_UP:
                 if y > self.HEADER_HEIGHT:
                     stdscr.move(y - 1, 0)
-            elif ch == ord('n'):
+            elif ch == ord('n') and not options['every']:
                 papers, options = self._search_next(keywords, options)
                 show_results(stdscr, papers, options)
-            elif ch == ord('p'):
+            elif ch == ord('p') and not options['every']:
                 papers, options = self._search_previous(keywords, options)
                 show_results(stdscr, papers, options)
             elif ch == ord('s') and self._is_GlobalAssistant():

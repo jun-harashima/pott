@@ -5,6 +5,7 @@ from whoosh.fields import Schema, ID, KEYWORD, TEXT
 from whoosh.filedb.filestore import FileStorage
 from whoosh.index import create_in, open_dir
 from whoosh.qparser import QueryParser
+from whoosh.query import Every
 
 
 class Index:
@@ -53,6 +54,19 @@ class Index:
         papers = []
         with index.searcher() as searcher:
             results = searcher.search(query)
+            for result in results:
+                paper = Paper('', result['title'],
+                              result['authors'].split(','), result['year'])
+                papers.append(paper)
+        return papers
+
+    def search_every(self):
+        storage = FileStorage(self.INDEX_DIR)
+        index = storage.open_index()
+        query = Every()
+        papers = []
+        with index.searcher() as searcher:
+            results = searcher.search(query, limit=None)
             for result in results:
                 paper = Paper('', result['title'],
                               result['authors'].split(','), result['year'])

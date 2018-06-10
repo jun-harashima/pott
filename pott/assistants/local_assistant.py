@@ -4,12 +4,14 @@ from pott.assistants.assistant import Assistant
 class LocalAssistant(Assistant):
 
     def _search(self, keywords, options):
-        papers = self.index.search(keywords)
+        if options.get('every'):
+            papers = self.index.search_every()
+        else:
+            papers = self.index.search(keywords)
         return papers
 
     def list(self):
-        paper_by_id = self.yaml.load()
-        return paper_by_id.values()
+        self.search([], {'start': 0, 'every': True})
 
     def reindex(self):
         paper_by_id = self.yaml.load()
