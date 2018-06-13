@@ -28,13 +28,13 @@ class Screen:
             elif ch == curses.KEY_UP:
                 if y > self.HEADER_HEIGHT:
                     stdscr.move(y - 1, 0)
-            elif ch == ord('n') and not options['every']:
+            elif ch == ord('n') and not options.get('every'):
                 papers, options = \
-                    self.assistant._search_next(keywords, options)
+                    self.assistant._search_next(keywords, options, papers)
                 self._update_table(stdscr, papers, options)
-            elif ch == ord('p') and not options['every']:
+            elif ch == ord('p') and not options.get('every'):
                 papers, options = \
-                    self.assistant._search_previous(keywords, options)
+                    self.assistant._search_previous(keywords, options, papers)
                 self._update_table(stdscr, papers, options)
             elif ch == ord('s') and self.assistant._is_GlobalAssistant():
                 paper = papers[y - self.HEADER_HEIGHT]
