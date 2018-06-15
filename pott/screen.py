@@ -38,8 +38,12 @@ class Screen:
                 self._update_table(stdscr, papers, options)
             elif ch == ord('s') and self.assistant._is_GlobalAssistant():
                 paper = papers[y - self.HEADER_HEIGHT]
-                self.assistant._save(stdscr, paper)
+                if not self.assistant.have_indexed(paper):
+                    self.assistant._save(stdscr, paper)
+                else:
+                    self._show_file_path(stdscr, paper)
                 selected_papers.append(paper)
+                selected_papers = list(dict.fromkeys(selected_papers))
                 stdscr.move(y, 0)
             elif ch == ord('q'):
                 break
@@ -65,3 +69,9 @@ class Screen:
 
         stdscr.addstr(0, 0, table.draw())
         stdscr.move(2, 0)
+
+    def _show_file_path(self, stdscr, paper):
+        file_path = paper.pdf.file_path
+        stdscr.addstr(13, 0, 'The paper has been saved as ' + file_path)
+        stdscr.move(14, 0)
+        stdscr.deleteln()
