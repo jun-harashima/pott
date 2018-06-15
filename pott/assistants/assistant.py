@@ -17,10 +17,10 @@ class Assistant:
         for paper in selected_papers:
             print(paper.pdf.file_path)
 
-    def _search_next(self, keywords, options):
+    def _search_next(self, keywords, options, papers=[]):
         return self._search_other(keywords, options, self.PER_PAGE)
 
-    def _search_previous(self, keywords, options):
+    def _search_previous(self, keywords, options, papers=[]):
         return self._search_other(keywords, options, self.PER_PAGE * -1)
 
     def _search_other(self, keywords, options, increment):
