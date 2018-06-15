@@ -35,6 +35,9 @@ class GlobalAssistant(Assistant):
             papers, options = super()._search_previous(keywords, options)
         return papers, options
 
+    def have_indexed(self, paper):
+        return self.yaml.have(paper)
+
     def _save(self, stdscr, paper):
         stdscr.addstr(13, 0, 'Downloading "' + paper.title + '"')
         stdscr.move(14, 0)

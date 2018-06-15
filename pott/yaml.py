@@ -37,3 +37,6 @@ class Yaml:
     def _load_in_dictionary_form(self):
         with open(self.YAML_FILE, 'r') as file:
             return yaml.load(file)
+
+    def have(self, paper):
+        return paper.id in self.load()

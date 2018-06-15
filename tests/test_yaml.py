@@ -35,6 +35,11 @@ class TestYaml(unittest.TestCase):
         self.assertEqual(papers_by_id['Smith2018']['url'],
                          'https://smith2018.pdf')
 
+    @patch('pott.yaml.Yaml.YAML_FILE', TEST_FILE)
+    def test_have(self):
+        self.assertEqual(Yaml().have(PAPER1), True)
+        self.assertEqual(Yaml().have(PAPER2), False)
+
 
 if __name__ == "__main__":
     unittest.main()
