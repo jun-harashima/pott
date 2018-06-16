@@ -30,5 +30,5 @@ class Assistant:
         options = original_options if papers else options
         return papers, options
 
-    def _is_GlobalAssistant(self):
+    def is_global(self):
         return self.__class__.__name__ == 'GlobalAssistant'
