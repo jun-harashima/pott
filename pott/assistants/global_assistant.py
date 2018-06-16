@@ -43,17 +43,12 @@ class GlobalAssistant(Assistant):
     def have_indexed(self, paper):
         return self.yaml.have(paper)
 
-    def _save(self, stdscr, paper):
-        stdscr.addstr(13, 0, 'Downloading "' + paper.title + '"')
-        stdscr.move(14, 0)
-        stdscr.deleteln()
-        stdscr.refresh()
+    def save(self, paper):
         response = self._download(paper)
         paper.pdf.save(response.content)
         paper.text.save(paper.pdf.extract_text())
         self.index.save(paper)
         self.yaml.update(paper)
-        stdscr.addstr(14, 0, 'Saved as "' + paper.pdf.file_path + '"')
 
     def _download(self, paper):
         try:
