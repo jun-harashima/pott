@@ -10,15 +10,15 @@ class Screen:
     def __init__(self, assistant):
         self.assistant = assistant
 
-    def show_papers(self, keywords, options):
-        selected_papers = curses.wrapper(self._show_papers, keywords, options)
+    def show_papers(self):
+        selected_papers = curses.wrapper(self._show_papers)
         return selected_papers
 
-    def _show_papers(self, stdscr, keywords, options):
+    def _show_papers(self, stdscr):
         selected_papers = []
-        papers = self.assistant._search(keywords, options)
+        papers = self.assistant._search()
         stdscr.clear()
-        self._update_table(stdscr, papers, options)
+        self._update_table(stdscr, papers)
         while True:
             ch = stdscr.getch()
             y, x = stdscr.getyx()
@@ -28,15 +28,13 @@ class Screen:
             elif ch == curses.KEY_UP:
                 if y > self.HEADER_HEIGHT:
                     stdscr.move(y - 1, 0)
-            elif ch == ord('n') and not options.get('every'):
-                papers, options = \
-                    self.assistant._search_next(keywords, options, papers)
-                self._update_table(stdscr, papers, options)
-            elif ch == ord('p') and not options.get('every'):
-                papers, options = \
-                    self.assistant._search_previous(keywords, options, papers)
-                self._update_table(stdscr, papers, options)
-            elif ch == ord('s') and self.assistant.is_global():
+            elif ch == ord('n') and not self.assistant.options.get('every'):
+                papers = self.assistant._search_next(papers)
+                self._update_table(stdscr, papers)
+            elif ch == ord('p') and not self.assistant.options.get('every'):
+                papers = self.assistant._search_previous(papers)
+                self._update_table(stdscr, papers)
+            elif ch == ord('s') and self.assistant._is_GlobalAssistant():
                 paper = papers[y - self.HEADER_HEIGHT]
                 if not self.assistant.have_indexed(paper):
                     self.assistant._save(stdscr, paper)
@@ -49,10 +47,10 @@ class Screen:
                 break
         return selected_papers
 
-    def _update_table(self, stdscr, papers, options):
+    def _update_table(self, stdscr, papers):
         rows = [self.HEADERS]
         for index, paper in enumerate(papers):
-            rank = index + options['start'] + 1
+            rank = index + self.assistant.options['start'] + 1
             pdf = '  A' if paper.url is not None else 'N/A'
             first_author = paper.authors[0][:12] if paper.authors else ''
             year = paper.year if paper.year is not None else ''
