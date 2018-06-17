@@ -36,7 +36,7 @@ class Screen:
                 papers, options = \
                     self.assistant._search_previous(keywords, options, papers)
                 self._update_table(stdscr, papers, options)
-            elif ch == ord('s') and self.assistant._is_GlobalAssistant():
+            elif ch == ord('s') and self.assistant.is_global():
                 paper = papers[y - self.HEADER_HEIGHT]
                 if not self.assistant.have_indexed(paper):
                     self.assistant._save(stdscr, paper)
