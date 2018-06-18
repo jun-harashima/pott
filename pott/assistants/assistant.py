@@ -7,9 +7,7 @@ class Assistant:
 
     PER_PAGE = 10
 
-    def __init__(self, keywords, options):
-        self.keywords = keywords
-        self.options = options
+    def __init__(self):
         self.yaml = Yaml()
         self.index = Index()
         self.screen = Screen(self)
