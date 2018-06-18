@@ -17,16 +17,17 @@ def main():
 @click.option('--year-low', '-yl', 'year_low')
 @click.option('--year-high', '-yh', 'year_high')
 def search(keywords, target, start, year_low, year_high):
-    assistant = LocalAssistant() if target == 'local' else GlobalAssistant()
     options = {'start': start, 'year_low': year_low, 'year_high': year_high}
-    assistant.search(keywords, options)
+    assistant = LocalAssistant(keywords, options) if target == 'local' \
+        else GlobalAssistant(keywords, options)
+    assistant.search()
     return 0
 
 
 @main.command()
 def list():
-    assistant = LocalAssistant()
-    assistant.list()
+    assistant = LocalAssistant([], {'start': 0, 'every': True})
+    assistant.search()
     return 0
 
 
