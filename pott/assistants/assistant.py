@@ -13,14 +13,15 @@ class Assistant:
         self.screen = Screen(self)
 
     def search(self):
-        selected_papers = self.screen.show_papers()
+        papers = self._search()
+        selected_papers = self.screen.show(papers)
         for paper in selected_papers:
             print(paper.pdf.file_path)
 
-    def _search_next(self, papers=[]):
+    def search_next(self, papers=[]):
         return self._search_other(self.PER_PAGE)
 
-    def _search_previous(self, papers=[]):
+    def search_previous(self, papers=[]):
         return self._search_other(self.PER_PAGE * -1)
 
     def _search_other(self, increment):

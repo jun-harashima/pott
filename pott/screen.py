@@ -10,13 +10,12 @@ class Screen:
     def __init__(self, assistant):
         self.assistant = assistant
 
-    def show_papers(self):
-        selected_papers = curses.wrapper(self._show_papers)
+    def show(self, papers):
+        selected_papers = curses.wrapper(self._show, papers)
         return selected_papers
 
-    def _show_papers(self, stdscr):
+    def _show(self, stdscr, papers):
         selected_papers = []
-        papers = self.assistant._search()
         stdscr.clear()
         self._update_table(stdscr, papers)
         while True:
@@ -29,10 +28,10 @@ class Screen:
                 if y > self.HEADER_HEIGHT:
                     stdscr.move(y - 1, 0)
             elif ch == ord('n') and not self.assistant.options.get('every'):
-                papers = self.assistant._search_next(papers)
+                papers = self.assistant.search_next(papers)
                 self._update_table(stdscr, papers)
             elif ch == ord('p') and not self.assistant.options.get('every'):
-                papers = self.assistant._search_previous(papers)
+                papers = self.assistant.search_previous(papers)
                 self._update_table(stdscr, papers)
             elif ch == ord('s') and self.assistant._is_GlobalAssistant():
                 paper = papers[y - self.HEADER_HEIGHT]
