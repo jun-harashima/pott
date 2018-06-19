@@ -27,10 +27,10 @@ class Screen:
             elif ch == curses.KEY_UP:
                 if y > self.HEADER_HEIGHT:
                     stdscr.move(y - 1, 0)
-            elif ch == ord('n') and not self.assistant.options.get('every'):
+            elif ch == ord('n') and not self.assistant.option.every:
                 papers = self.assistant.search_next(papers)
                 self._update_table(stdscr, papers)
-            elif ch == ord('p') and not self.assistant.options.get('every'):
+            elif ch == ord('p') and not self.assistant.option.every:
                 papers = self.assistant.search_previous(papers)
                 self._update_table(stdscr, papers)
             elif ch == ord('s') and self.assistant._is_GlobalAssistant():
@@ -49,7 +49,7 @@ class Screen:
     def _update_table(self, stdscr, papers):
         rows = [self.HEADERS]
         for index, paper in enumerate(papers):
-            rank = index + self.assistant.options['start'] + 1
+            rank = index + self.assistant.option.start + 1
             pdf = '  A' if paper.url is not None else 'N/A'
             first_author = paper.authors[0][:12] if paper.authors else ''
             year = paper.year if paper.year is not None else ''

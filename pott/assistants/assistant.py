@@ -25,10 +25,11 @@ class Assistant:
         return self._search_other(self.PER_PAGE * -1)
 
     def _search_other(self, increment):
-        original_options = self.options
-        self.options['start'] += increment
+        original_start = self.option.start
+        self.option.start += increment
         papers = self._search()
-        self.options = original_options if papers else self.options
+        if papers:
+            self.option.start = original_start
         return papers
 
     def is_global(self):
