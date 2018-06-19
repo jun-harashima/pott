@@ -10,3 +10,4 @@ pyquery==1.4.0
 pdfminer.six==20170720
 whoosh==2.7.4
 texttable>=1.0
+Click>=6.0
