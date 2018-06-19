@@ -9,6 +9,11 @@ class GlobalAssistant(Assistant):
 
     SCHOLAR_URL = "https://scholar.google.com/scholar"
 
+    def __init__(self, keywords, options):
+        self.keywords = keywords
+        self.options = options
+        super().__init__()
+
     def _search(self):
         url = self._set_url()
         pq_html = PyQuery(url)

@@ -26,7 +26,7 @@ def search(keywords, target, start, year_low, year_high):
 
 @main.command()
 def list():
-    assistant = LocalAssistant([], {'start': 0, 'every': True})
+    assistant = LocalAssistant((), {'start': 0, 'every': True})
     assistant.search()
     return 0
 
