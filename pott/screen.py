@@ -36,12 +36,12 @@ class Screen:
                 self._update_table(stdscr, papers)
             elif ch == ord('s') and self.assistant._is_GlobalAssistant():
                 paper = papers[y - self.HEADER_HEIGHT]
-                if not self.assistant.have_indexed(paper):
-                    self.assistant._save(stdscr, paper)
-                else:
+                if self.assistant.have_indexed(paper):
                     self._show_file_path(stdscr, paper)
-                selected_papers.append(paper)
-                selected_papers = list(dict.fromkeys(selected_papers))
+                else:
+                    self._save(stdscr, paper)
+                selected_papers = \
+                    self._append_without_duplication(selected_papers, paper)
                 stdscr.move(y, 0)
             elif ch == ord('q'):
                 break
@@ -73,3 +73,16 @@ class Screen:
         stdscr.addstr(13, 0, 'The paper has been saved as ' + file_path)
         stdscr.move(14, 0)
         stdscr.deleteln()
+
+    def _save(self, stdscr, paper):
+        stdscr.addstr(13, 0, 'Downloading "' + paper.title + '"')
+        stdscr.move(14, 0)
+        stdscr.deleteln()
+        stdscr.refresh()
+        self.assistant.save(paper)
+        stdscr.addstr(14, 0, 'Saved as "' + paper.pdf.file_path + '"')
+
+    def _append_without_duplication(self, selected_papers, paper):
+        selected_papers.append(paper)
+        selected_papers = list(dict.fromkeys(selected_papers))
+        return selected_papers
