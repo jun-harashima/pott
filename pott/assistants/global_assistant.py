@@ -30,14 +30,14 @@ class GlobalAssistant(Assistant):
             url += '&as_yhi=' + self.options['year_high']
         return url
 
-    def _search_next(self, papers):
+    def search_next(self, papers):
         if self.options['start'] < 990:
-            papers = super()._search_next()
+            papers = super().search_next()
         return papers
 
-    def _search_previous(self, papers):
+    def search_previous(self, papers):
         if self.options['start'] > 0:
-            papers = super()._search_previous()
+            papers = super().search_previous()
         return papers
 
     def have_indexed(self, paper):
