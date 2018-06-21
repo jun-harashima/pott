@@ -1,5 +1,6 @@
 import click
 import sys
+from pott.option import Option
 from pott.assistants.global_assistant import GlobalAssistant
 from pott.assistants.local_assistant import LocalAssistant
 
@@ -17,16 +18,17 @@ def main():
 @click.option('--year-low', '-yl', 'year_low')
 @click.option('--year-high', '-yh', 'year_high')
 def search(keywords, target, start, year_low, year_high):
-    options = {'start': start, 'year_low': year_low, 'year_high': year_high}
-    assistant = LocalAssistant(keywords, options) if target == 'local' \
-        else GlobalAssistant(keywords, options)
+    option = Option(start=start, year_low=year_low, year_high=year_high)
+    assistant = LocalAssistant(keywords, option) if target == 'local' \
+        else GlobalAssistant(keywords, option)
     assistant.search()
     return 0
 
 
 @main.command()
 def list():
-    assistant = LocalAssistant((), {'start': 0, 'every': True})
+    option = Option(start=0, every=True)
+    assistant = LocalAssistant((), option)
     assistant.search()
     return 0
 

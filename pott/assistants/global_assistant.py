@@ -9,9 +9,9 @@ class GlobalAssistant(Assistant):
 
     SCHOLAR_URL = "https://scholar.google.com/scholar"
 
-    def __init__(self, keywords, options):
+    def __init__(self, keywords, option):
         self.keywords = keywords
-        self.options = options
+        self.option = option
         super().__init__()
 
     def _search(self):
@@ -22,21 +22,21 @@ class GlobalAssistant(Assistant):
 
     def _set_url(self):
         url = self.SCHOLAR_URL + '?q=' + ' '.join(self.keywords)
-        if self.options['start'] != 0:
-            url += '&start=' + str(self.options['start'])
-        if self.options['year_low'] is not None:
-            url += '&as_ylo=' + self.options['year_low']
-        if self.options['year_high'] is not None:
-            url += '&as_yhi=' + self.options['year_high']
+        if self.option.start != 0:
+            url += '&start=' + str(self.option.start)
+        if self.option.year_low is not None:
+            url += '&as_ylo=' + self.option.year_low
+        if self.option.year_high is not None:
+            url += '&as_yhi=' + self.option.year_high
         return url
 
     def search_next(self, papers):
-        if self.options['start'] < 990:
+        if self.option.start < 990:
             papers = super().search_next()
         return papers
 
     def search_previous(self, papers):
-        if self.options['start'] > 0:
+        if self.option.start > 0:
             papers = super().search_previous()
         return papers
 

@@ -3,22 +3,22 @@ from pott.assistants.assistant import Assistant
 
 class LocalAssistant(Assistant):
 
-    def __init__(self, keywords, options):
-        _keywords = self._transform(options)
+    def __init__(self, keywords, option):
+        _keywords = self._transform(option)
         self.keywords = keywords + _keywords
-        self.options = options
+        self.option = option
         super().__init__()
 
-    def _transform(self, options):
+    def _transform(self, option):
         keywords = []
-        if options.get('year_low'):
-            keywords.append('year:[{} to]'.format(options['year_low']))
-        if options.get('year_high'):
-            keywords.append('year:[to {}]'.format(options['year_high']))
+        if option.year_low:
+            keywords.append('year:[{} to]'.format(option.year_low))
+        if option.year_high:
+            keywords.append('year:[to {}]'.format(option.year_high))
         return tuple(keywords)
 
     def _search(self):
-        if self.options.get('every'):
+        if self.option.every:
             papers = self.index.search_every()
         else:
             papers = self.index.search(self.keywords)
