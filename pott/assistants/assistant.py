@@ -28,7 +28,7 @@ class Assistant:
         original_start = self.option.start
         self.option.start += increment
         papers = self._search()
-        if papers:
+        if not papers:
             self.option.start = original_start
         return papers
 
