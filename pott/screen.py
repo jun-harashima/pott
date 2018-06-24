@@ -49,6 +49,8 @@ class Screen:
                 paper = papers[y - self.HEADER_HEIGHT]
                 if self.assistant.have_indexed(paper):
                     self._show_file_path(paper)
+                elif paper.url is None:
+                    self._recommend_other(paper)
                 else:
                     self._save(paper)
                 selected_papers = \
@@ -85,18 +87,25 @@ class Screen:
         self.stdscr.move(self.HEADER_HEIGHT, 0)
 
     def _show_file_path(self, paper):
+        self._delete_message()
         file_path = paper.pdf.file_path
         self.stdscr.addstr(13, 0, 'The paper has been saved as ' + file_path)
-        self.stdscr.move(14, 0)
-        self.stdscr.deleteln()
 
-    def _save(self, paper):
+    def _recommend_other(self, stdscr, paper):
+        self._delete_message(stdscr)
+        self.stdscr.addstr(13, 0, 'The paper is not available.')
+
+    def _save(self, stdscr, paper):
+        self._delete_message(stdscr)
         self.stdscr.addstr(13, 0, 'Downloading "' + paper.title + '"')
-        self.stdscr.move(14, 0)
-        self.stdscr.deleteln()
         self.stdscr.refresh()
         self.assistant.save(paper)
         self.stdscr.addstr(14, 0, 'Saved as "' + paper.pdf.file_path + '"')
+
+    def _delete_message(self):
+        for _ in range(2):
+            self.stdscr.move(13, 0)
+            self.stdscr.deleteln()
 
     def _append_without_duplication(self, selected_papers, paper):
         selected_papers.append(paper)
