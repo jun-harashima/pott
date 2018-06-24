@@ -46,15 +46,15 @@ class Index:
                                   year=paper.year)
         index_writer.commit()
 
-    def search(self, keywords):
+    def search(self, keywords, pagenum):
         storage = FileStorage(self.INDEX_DIR)
         index = storage.open_index()
         query_parser = QueryParser("title", schema=index.schema)
         query = query_parser.parse(' '.join(keywords))
         papers = []
         with index.searcher() as searcher:
-            results = searcher.search(query)
-            for result in results:
+            page = searcher.search_page(query, pagenum)
+            for result in page:
                 paper = Paper('', result['title'],
                               result['authors'].split(','), result['year'])
                 papers.append(paper)

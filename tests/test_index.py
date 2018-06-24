@@ -28,19 +28,19 @@ class TestIndex(unittest.TestCase):
         Index()._save_content(self.paper1, PAPER1_CONTENT)
         Index()._save_content(self.paper2, PAPER2_CONTENT)
 
-        papers = Index().search(['2017'])
+        papers = Index().search(['2017'], 1)
         self.assertEqual(len(papers), 1)
         self.assertEqual(papers[0].title, 'Awesome Study in 2017')
         self.assertEqual(papers[0].authors[0], 'John Smith')
         self.assertEqual(papers[0].year, '2017')
 
-        papers = Index().search(['2018'])
+        papers = Index().search(['2018'], 1)
         self.assertEqual(len(papers), 1)
         self.assertEqual(papers[0].title, 'Awesome Study in 2018')
         self.assertEqual(papers[0].authors[0], 'John Smith')
         self.assertEqual(papers[0].year, '2018')
 
-        papers = Index().search(['Awesome'])
+        papers = Index().search(['Awesome'], 1)
         self.assertEqual(len(papers), 2)
 
 

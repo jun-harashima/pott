@@ -19,10 +19,9 @@ class LocalAssistant(Assistant):
 
     def _search(self):
         if self.option.every:
-            papers = self.index.search_every()
-        else:
-            papers = self.index.search(self.keywords)
-        return papers
+            return self.index.search_every()
+        pagenum = self.option.start // self.PER_PAGE + 1
+        return self.index.search(self.keywords, pagenum)
 
     def reindex(self):
         paper_by_id = self.yaml.load()
