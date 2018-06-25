@@ -47,6 +47,17 @@ class Screen:
         return selected_papers
 
     def _update_table(self, stdscr, papers):
+        self._delete_rows(stdscr)
+        rows = self._set_rows(papers)
+        table = self._set_table(rows)
+        self._draw_table(stdscr, table)
+
+    def _delete_rows(self, stdscr):
+        for _ in range(self.assistant.PER_PAGE):
+            stdscr.move(self.HEADER_HEIGHT + 1, 0)
+            stdscr.deleteln()
+
+    def _set_rows(self, papers):
         rows = [self.HEADERS]
         for index, paper in enumerate(papers):
             rank = index + self.assistant.option.start + 1
@@ -57,15 +68,19 @@ class Screen:
             title = paper.title[:79]
             row = [rank, pdf, first_author, year, cited_by, title]
             rows.append(row)
+        return rows
 
+    def _set_table(self, rows):
         table = Texttable()
         table.set_deco(Texttable.HEADER)
         table.set_cols_align(['r', 'r', 'l', 'r', 'r', 'l'])
         table.set_cols_width([4, 3, 12, 4, 8, 79])
         table.add_rows(rows)
+        return table
 
+    def _draw_table(self, stdscr, table):
         stdscr.addstr(0, 0, table.draw())
-        stdscr.move(2, 0)
+        stdscr.move(self.HEADER_HEIGHT, 0)
 
     def _show_file_path(self, stdscr, paper):
         file_path = paper.pdf.file_path
