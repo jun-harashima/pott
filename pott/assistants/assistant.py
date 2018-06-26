@@ -10,11 +10,11 @@ class Assistant:
     def __init__(self):
         self.yaml = Yaml()
         self.index = Index()
-        self.screen = Screen(self)
 
     def search(self):
         papers = self._search()
-        selected_papers = self.screen.show(papers)
+        screen = Screen(self)
+        selected_papers = screen.show(papers)
         for paper in selected_papers:
             print(paper.pdf.file_path)
 
