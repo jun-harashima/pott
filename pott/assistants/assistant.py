@@ -21,8 +21,10 @@ class Assistant:
     def search_next(self, papers=[]):
         return self._search_other(self.PER_PAGE)
 
-    def search_previous(self, papers=[]):
-        return self._search_other(self.PER_PAGE * -1)
+    def search_previous(self, papers):
+        if self.option.start > 0:
+            papers = self._search_other(self.PER_PAGE * -1)
+        return papers
 
     def _search_other(self, increment):
         original_start = self.option.start

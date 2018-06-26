@@ -8,6 +8,34 @@ from pott.assistants.local_assistant import LocalAssistant
 
 class TestAssistant(unittest.TestCase):
 
+    @patch('pott.assistants.assistant.Assistant._search_other')
+    def test_search_previous_for_global_search(self, mock_method):
+        current_papers = [Paper('https://smith2018.pdf')]
+        previous_papers = [Paper('https://smith2017.pdf')]
+        mock_method.return_value = previous_papers
+
+        assistant = GlobalAssistant((), Option(start=10))
+        returned_papers = assistant.search_previous(current_papers)
+        self.assertEqual(returned_papers, previous_papers)
+
+        assistant = GlobalAssistant((), Option(start=0))
+        returned_papers = assistant.search_previous(current_papers)
+        self.assertEqual(returned_papers, current_papers)
+
+    @patch('pott.assistants.assistant.Assistant._search_other')
+    def test_search_previous_for_local_search(self, mock_method):
+        current_papers = [Paper('https://smith2018.pdf')]
+        previous_papers = [Paper('https://smith2017.pdf')]
+        mock_method.return_value = previous_papers
+
+        assistant = LocalAssistant((), Option(start=10))
+        returned_papers = assistant.search_previous(current_papers)
+        self.assertEqual(returned_papers, previous_papers)
+
+        assistant = LocalAssistant((), Option(start=0))
+        returned_papers = assistant.search_previous(current_papers)
+        self.assertEqual(returned_papers, current_papers)
+
     def test__search_other(self):
 
         with patch.object(GlobalAssistant, '_search', return_value=[Paper()]):
