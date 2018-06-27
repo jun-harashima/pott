@@ -2,6 +2,8 @@ import unittest
 from unittest.mock import patch
 from pott.option import Option
 from pott.paper import Paper
+from pott.yaml import Yaml
+from pott.assistants.assistant import Assistant
 from pott.assistants.global_assistant import GlobalAssistant
 from pott.assistants.local_assistant import LocalAssistant
 
@@ -50,9 +52,15 @@ class TestAssistant(unittest.TestCase):
             assistant._search_other(GlobalAssistant.PER_PAGE)
             self.assertEqual(assistant.option.start, 0)
 
-    def test__is_global(self):
-        self.assertEqual(GlobalAssistant((), Option()).is_global(), True)
-        self.assertEqual(LocalAssistant((), Option()).is_global(), False)
+    def test_have_indexed(self):
+        assistant = Assistant()
+        paper = Paper()
+
+        with patch.object(Yaml, 'have', return_value=True):
+            self.assertEqual(assistant.have_indexed(paper), True)
+
+        with patch.object(Yaml, 'have', return_value=False):
+            self.assertEqual(assistant.have_indexed(paper), False)
 
 
 if __name__ == "__main__":

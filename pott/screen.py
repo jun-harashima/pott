@@ -54,7 +54,7 @@ class Screen:
         elif ch == ord('p') and not self.assistant.option.every:
             papers = self.assistant.search_previous(papers)
             self._update_table(papers)
-        elif ch == ord('s') and self.assistant.is_global():
+        elif ch == ord('s'):
             paper = papers[y - self.HEADER_HEIGHT]
             if self.assistant.have_indexed(paper):
                 success = self._show_file_path(paper)
