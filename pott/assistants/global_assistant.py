@@ -35,11 +35,6 @@ class GlobalAssistant(Assistant):
             papers = super().search_next()
         return papers
 
-    def search_previous(self, papers):
-        if self.option.start > 0:
-            papers = super().search_previous()
-        return papers
-
     def have_indexed(self, paper):
         return self.yaml.have(paper)
 
