@@ -22,43 +22,52 @@ class Screen:
         return table
 
     def show(self, papers):
-        selected_papers = curses.wrapper(self._show, papers)
+        selected_papers = curses.wrapper(self._wrap_show, papers)
         return selected_papers
 
-    def _show(self, stdscr, papers):
+    def _wrap_show(self, stdscr, papers):
         self.stdscr = stdscr  # name of the corresponding C variable
         self.stdscr.clear()
         self._initialize_table()
         self._update_table(papers)
+        selected_papers = self._show(papers)
+        return selected_papers
 
+    def _show(self, papers):
         selected_papers = []
         while True:
             ch = self.stdscr.getch()
             y, x = self.stdscr.getyx()
-            if ch == curses.KEY_DOWN and y <= len(papers):
-                self.stdscr.move(y + 1, 0)
-            elif ch == curses.KEY_UP and y > self.HEADER_HEIGHT:
-                self.stdscr.move(y - 1, 0)
-            elif ch == ord('n') and not self.assistant.option.every:
-                papers = self.assistant.search_next(papers)
-                self._update_table(papers)
-            elif ch == ord('p') and not self.assistant.option.every:
-                papers = self.assistant.search_previous(papers)
-                self._update_table(papers)
-            elif ch == ord('s') and self.assistant.is_global():
-                paper = papers[y - self.HEADER_HEIGHT]
-                if self.assistant.have_indexed(paper):
-                    self._show_file_path(paper)
-                elif paper.url is None:
-                    self._recommend_other(paper)
-                else:
-                    self._save(paper)
-                selected_papers = \
-                    self._append_without_duplication(selected_papers, paper)
-                self.stdscr.move(y, 0)
-            elif ch == ord('q'):
+            if not self._act_on_key(ch, y, x, selected_papers, papers):
                 break
         return selected_papers
+
+    def _act_on_key(self, ch, y, x, selected_papers, papers):
+        if ch == curses.KEY_DOWN and y <= len(papers):
+            self._move(y + 1)
+        elif ch == curses.KEY_UP and y > self.HEADER_HEIGHT:
+            self._move(y - 1)
+        elif ch == ord('n') and not self.assistant.option.every:
+            papers = self.assistant.search_next(papers)
+            self._update_table(papers)
+        elif ch == ord('p') and not self.assistant.option.every:
+            papers = self.assistant.search_previous(papers)
+            self._update_table(papers)
+        elif ch == ord('s') and self.assistant.is_global():
+            paper = papers[y - self.HEADER_HEIGHT]
+            if self.assistant.have_indexed(paper):
+                self._show_file_path(paper)
+            else:
+                self._save(paper)
+            selected_papers = \
+                self._append_without_duplication(selected_papers, paper)
+            self._move(y)
+        elif ch == ord('q'):
+            return False
+        return True
+
+    def _move(self, destination):
+        self.stdscr.move(destination, 0)
 
     def _update_table(self, papers):
         self._delete_rows()
@@ -91,12 +100,12 @@ class Screen:
         file_path = paper.pdf.file_path
         self.stdscr.addstr(13, 0, 'The paper has been saved as ' + file_path)
 
-    def _recommend_other(self, stdscr, paper):
-        self._delete_message(stdscr)
+    def _recommend_other(self, paper):
+        self._delete_message()
         self.stdscr.addstr(13, 0, 'The paper is not available.')
 
-    def _save(self, stdscr, paper):
-        self._delete_message(stdscr)
+    def _save(self, paper):
+        self._delete_message()
         self.stdscr.addstr(13, 0, 'Downloading "' + paper.title + '"')
         self.stdscr.refresh()
         self.assistant.save(paper)
