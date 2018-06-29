@@ -22,7 +22,7 @@ class GlobalAssistant(Assistant):
 
     def _set_url(self):
         url = self.SCHOLAR_URL + '?q=' + ' '.join(self.keywords)
-        if self.option.start != 0:
+        if self.option.start is not None:
             url += '&start=' + str(self.option.start)
         if self.option.year_low is not None:
             url += '&as_ylo=' + self.option.year_low
