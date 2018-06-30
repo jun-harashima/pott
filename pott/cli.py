@@ -16,7 +16,7 @@ def main():
 @click.option('--local', '-l', 'target', flag_value='local')
 @click.option('--year-low', '-yl', 'year_low')
 @click.option('--year-high', '-yh', 'year_high')
-def search(keywords, target, start, year_low, year_high):
+def search(keywords, target, year_low, year_high):
     option = Option(start=0, year_low=year_low, year_high=year_high)
     assistant = LocalAssistant(keywords, option) if target == 'local' \
         else GlobalAssistant(keywords, option)
