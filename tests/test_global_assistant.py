@@ -11,6 +11,10 @@ class TestGlobalAssistant(unittest.TestCase):
         assistant = GlobalAssistant(('keyword', ), Option())
         self.assertEqual(assistant._set_url(), url + '?q=keyword')
 
+        # Do not attach start=0
+        assistant = GlobalAssistant(('keyword', ), Option(start=0))
+        self.assertEqual(assistant._set_url(), url + '?q=keyword')
+
         assistant = GlobalAssistant(('keyword', ), Option(start=10))
         self.assertEqual(assistant._set_url(), url + '?q=keyword&start=10')
 
