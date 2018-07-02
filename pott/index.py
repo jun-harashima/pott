@@ -47,8 +47,7 @@ class Index:
         index_writer.commit()
 
     def search(self, keywords, pagenum):
-        storage = FileStorage(self.INDEX_DIR)
-        index = storage.open_index()
+        index = self._set_index()
         query_parser = QueryParser("title", schema=index.schema)
         query = query_parser.parse(' '.join(keywords))
         papers = []
@@ -61,8 +60,7 @@ class Index:
         return papers
 
     def search_every(self):
-        storage = FileStorage(self.INDEX_DIR)
-        index = storage.open_index()
+        index = self._set_index()
         query = Every()
         papers = []
         with index.searcher() as searcher:
@@ -72,3 +70,8 @@ class Index:
                               result['authors'].split(','), result['year'])
                 papers.append(paper)
         return papers
+
+    def _set_index(self):
+        storage = FileStorage(self.INDEX_DIR)
+        index = storage.open_index()
+        return index
