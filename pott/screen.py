@@ -56,11 +56,12 @@ class Screen:
         elif ch == ord('s') and self.assistant.is_global():
             paper = papers[y - self.HEADER_HEIGHT]
             if self.assistant.have_indexed(paper):
-                self._show_file_path(paper)
+                success = self._show_file_path(paper)
             else:
-                self._save(paper)
-            selected_papers = \
-                self._append_without_duplication(selected_papers, paper)
+                success = self._save(paper)
+            if success:
+                selected_papers = \
+                    self._append_without_duplication(selected_papers, paper)
             self._move(y)
         elif ch == ord('q'):
             return False
@@ -99,6 +100,7 @@ class Screen:
         self._delete_message()
         file_path = paper.pdf.file_path
         self.stdscr.addstr(13, 0, 'The paper has been saved as ' + file_path)
+        return True
 
     def _recommend_other(self, paper):
         self._delete_message()
@@ -108,8 +110,12 @@ class Screen:
         self._delete_message()
         self.stdscr.addstr(13, 0, 'Downloading "' + paper.title + '"')
         self.stdscr.refresh()
-        self.assistant.save(paper)
-        self.stdscr.addstr(14, 0, 'Saved as "' + paper.pdf.file_path + '"')
+        success = self.assistant.save(paper)
+        if success:
+            self.stdscr.addstr(14, 0, 'Saved as "' + paper.pdf.file_path + '"')
+        else:
+            self.stdscr.addstr(14, 0, 'The paper could not be downloaded.')
+        return success
 
     def _delete_message(self):
         for _ in range(2):
