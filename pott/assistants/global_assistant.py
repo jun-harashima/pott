@@ -40,10 +40,13 @@ class GlobalAssistant(Assistant):
 
     def save(self, paper):
         response = self._download(paper)
+        if response is None:
+            return False
         paper.pdf.save(response.content)
         paper.text.save(paper.pdf.extract_text())
         self.index.save(paper)
         self.yaml.update(paper)
+        return True
 
     def _download(self, paper):
         try:

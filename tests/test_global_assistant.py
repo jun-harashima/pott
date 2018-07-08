@@ -1,5 +1,7 @@
 import unittest
+from unittest.mock import patch
 from pott.option import Option
+from pott.paper import Paper
 from pott.assistants.global_assistant import GlobalAssistant
 
 
@@ -23,6 +25,11 @@ class TestGlobalAssistant(unittest.TestCase):
 
         assistant = GlobalAssistant(('keyword', ), Option(year_high='2018'))
         self.assertEqual(assistant._set_url(), url + '?q=keyword&as_yhi=2018')
+
+    def test_save(self):
+        with patch.object(GlobalAssistant, '_download', return_value=None):
+            assistant = GlobalAssistant(('keyword', ), Option())
+            self.assertEqual(assistant.save(Paper()), False)
 
 
 if __name__ == "__main__":
