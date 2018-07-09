@@ -38,7 +38,8 @@ class Screen:
         while True:
             ch = self.stdscr.getch()
             y, x = self.stdscr.getyx()
-            if not self._act_on_key(ch, y, x, selected_papers, papers):
+            quit, papers = self._act_on_key(ch, y, x, selected_papers, papers)
+            if quit:
                 break
         return selected_papers
 
@@ -64,8 +65,8 @@ class Screen:
                     self._append_without_duplication(selected_papers, paper)
             self._move(y)
         elif ch == ord('q'):
-            return False
-        return True
+            return True
+        return False, papers
 
     def _move(self, destination):
         self.stdscr.move(destination, 0)
