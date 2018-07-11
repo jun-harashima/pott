@@ -34,5 +34,5 @@ class Assistant:
             self.option.start = original_start
         return papers
 
-    def is_global(self):
-        return self.__class__.__name__ == 'GlobalAssistant'
+    def have_indexed(self, paper):
+        return self.yaml.have(paper)
