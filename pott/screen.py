@@ -65,7 +65,7 @@ class Screen:
                     self._append_without_duplication(selected_papers, paper)
             self._move(y)
         elif ch == ord('q'):
-            return True
+            return True, []
         return False, papers
 
     def _move(self, destination):

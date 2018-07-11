@@ -30,6 +30,13 @@ class TestScreen(unittest.TestCase):
         screen._act_on_key(259, 3, 0, [], [Paper()])  # 258: KEY_UP
         mock__move.assert_called_once_with(2)
 
+    def test__act_on_key_for_quit(self):
+        assistant = Assistant()
+        screen = Screen(assistant)
+        actual = screen._act_on_key(113, 2, 0, [], [Paper()])  # 113: ord('q')
+        desired = (True, [])
+        self.assertEqual(actual, desired)
+
 
 if __name__ == "__main__":
     unittest.main()
