@@ -79,7 +79,7 @@ class Screen:
     def _delete_rows(self):
         self.table._rows = []
         for _ in range(self.assistant.PER_PAGE):
-            self.stdscr.move(self.HEADER_HEIGHT + 1, 0)
+            self.stdscr.move(self.HEADER_HEIGHT, 0)
             self.stdscr.deleteln()
 
     def _set_rows(self, papers):
