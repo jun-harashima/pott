@@ -53,6 +53,12 @@ class Index:
         papers = []
         with index.searcher() as searcher:
             page = searcher.search_page(query, pagenum)
+
+            # search_page will raise a ValueError if we ask for a page number
+            # higher than the number of pages in the resulting query.
+            if page.pagecount < pagenum:
+                return []
+
             for result in page:
                 paper = Paper('', result['title'],
                               result['authors'].split(','), result['year'])
