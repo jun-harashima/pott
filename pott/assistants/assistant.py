@@ -1,5 +1,6 @@
 from pott.index import Index
 from pott.yaml import Yaml
+from pott.option import Option
 from pott.screen import Screen
 
 
@@ -7,9 +8,10 @@ class Assistant:
 
     PER_PAGE = 10
 
-    def __init__(self):
+    def __init__(self, option=Option()):
         self.yaml = Yaml()
         self.index = Index()
+        self.option = option
 
     def search(self):
         papers = self._search()
