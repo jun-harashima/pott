@@ -6,8 +6,7 @@ class LocalAssistant(Assistant):
     def __init__(self, keywords, option):
         _keywords = self._transform(option)
         self.keywords = keywords + _keywords
-        self.option = option
-        super().__init__()
+        super().__init__(option)
 
     def _transform(self, option):
         keywords = []

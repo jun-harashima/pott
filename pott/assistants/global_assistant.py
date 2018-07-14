@@ -11,8 +11,7 @@ class GlobalAssistant(Assistant):
 
     def __init__(self, keywords, option):
         self.keywords = keywords
-        self.option = option
-        super().__init__()
+        super().__init__(option)
 
     def _search(self):
         url = self._set_url()
