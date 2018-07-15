@@ -4,13 +4,12 @@ from pott.files.text import Text
 
 class Paper:
 
-    def __init__(self, url=None, title=None, authors=[], year=None,
-                 cited_by=None):
-        self.url = url
+    def __init__(self, title, authors=[], year=None, cited_by=None, url=None):
         self.title = title
         self.authors = authors
         self.year = year
         self.cited_by = cited_by
+        self.url = url
         self.id = ''
         if authors != [] and year is not None:
             self.id = authors[0].split(' ')[-1] + year

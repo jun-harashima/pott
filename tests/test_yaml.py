@@ -7,18 +7,18 @@ from pott.yaml import Yaml
 
 TEST_FILE = 'test.yaml'
 
-PAPER1 = Paper('https://smith2017.pdf', 'Awesome Study in 2017',
-               ['John Smith'], '2017')
-PAPER2 = Paper('https://smith2018.pdf', 'Awesome Study in 2018',
-               ['John Smith'], '2018')
+PAPER1 = Paper('Awesome Study in 2017', ['John Smith'], '2017', 50,
+               'https://smith2017.pdf')
+PAPER2 = Paper('Awesome Study in 2018', ['John Smith'], '2018', 10,
+               'https://smith2018.pdf')
 
 
 class TestYaml(unittest.TestCase):
 
     def setUp(self):
         with open(TEST_FILE, 'w') as file:
-            dict = {'url': PAPER1.url, 'title': PAPER1.title,
-                    'authors': PAPER1.authors, 'year': PAPER1.year}
+            dict = {'title': PAPER1.title, 'authors': PAPER1.authors,
+                    'year': PAPER1.year, 'url': PAPER1.url}
             papers_by_id = {'Smith2017': dict}
             yaml.dump(papers_by_id, file, default_flow_style=False)
 

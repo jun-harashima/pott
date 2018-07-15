@@ -60,8 +60,8 @@ class Index:
                 return []
 
             for result in page:
-                paper = Paper('', result['title'],
-                              result['authors'].split(','), result['year'])
+                paper = Paper(result['title'], result['authors'].split(','),
+                              result['year'])
                 papers.append(paper)
         return papers
 
@@ -72,8 +72,8 @@ class Index:
         with index.searcher() as searcher:
             results = searcher.search(query, limit=None)
             for result in results:
-                paper = Paper('', result['title'],
-                              result['authors'].split(','), result['year'])
+                paper = Paper(result['title'], result['authors'].split(','),
+                              result['year'])
                 papers.append(paper)
         return papers
 

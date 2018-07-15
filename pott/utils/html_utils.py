@@ -22,7 +22,7 @@ def extract_paper_from(pq_div):
     title = pq_div.find('div.gs_ri h3 a').text()
     authors, year = _extract_authors_and_year_from(pq_div)
     cited_by = _extract_cited_by_from(pq_div)
-    return Paper(url, title, authors, year, cited_by)
+    return Paper(title, authors, year, cited_by, url)
 
 
 def _extract_authors_and_year_from(pq_div):

@@ -24,7 +24,7 @@ class TestLocalAssistant(unittest.TestCase):
 
     def test__search(self):
 
-        paper = Paper()
+        paper = Paper('Awesome Study in 2018')
 
         with patch.object(Index, 'search_every', return_value=[paper]):
             option = Option(every=True)
