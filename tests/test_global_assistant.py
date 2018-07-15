@@ -29,7 +29,8 @@ class TestGlobalAssistant(unittest.TestCase):
     def test_save(self):
         with patch.object(GlobalAssistant, '_download', return_value=None):
             assistant = GlobalAssistant(('keyword', ), Option())
-            self.assertEqual(assistant.save(Paper()), False)
+            paper = Paper('Awesome Study in 2018')
+            self.assertEqual(assistant.save(paper), False)
 
 
 if __name__ == "__main__":

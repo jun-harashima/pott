@@ -12,8 +12,8 @@ class TestAssistant(unittest.TestCase):
 
     @patch('pott.assistants.assistant.Assistant._search_other')
     def test_search_previous_for_global_search(self, mock_method):
-        current_papers = [Paper('https://smith2018.pdf')]
-        previous_papers = [Paper('https://smith2017.pdf')]
+        current_papers = [Paper('Awesome Study in 2018')]
+        previous_papers = [Paper('Awesome Study in 2017')]
         mock_method.return_value = previous_papers
 
         assistant = GlobalAssistant((), Option(start=10))
@@ -26,8 +26,8 @@ class TestAssistant(unittest.TestCase):
 
     @patch('pott.assistants.assistant.Assistant._search_other')
     def test_search_previous_for_local_search(self, mock_method):
-        current_papers = [Paper('https://smith2018.pdf')]
-        previous_papers = [Paper('https://smith2017.pdf')]
+        current_papers = [Paper('Awesome Study in 2018')]
+        previous_papers = [Paper('Awesome Study in 2017')]
         mock_method.return_value = previous_papers
 
         assistant = LocalAssistant((), Option(start=10))
@@ -40,7 +40,8 @@ class TestAssistant(unittest.TestCase):
 
     def test__search_other(self):
 
-        with patch.object(GlobalAssistant, '_search', return_value=[Paper()]):
+        with patch.object(GlobalAssistant, '_search',
+                          return_value=[Paper('Awesome Study in 2018')]):
             assistant = GlobalAssistant((), Option(start=0))
             self.assertEqual(assistant.option.start, 0)
             assistant._search_other(GlobalAssistant.PER_PAGE)
@@ -54,7 +55,7 @@ class TestAssistant(unittest.TestCase):
 
     def test_have_indexed(self):
         assistant = Assistant()
-        paper = Paper()
+        paper = Paper('Awesome Study in 2018')
 
         with patch.object(Yaml, 'have', return_value=True):
             self.assertEqual(assistant.have_indexed(paper), True)

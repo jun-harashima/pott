@@ -14,10 +14,10 @@ PAPER2_CONTENT = 'This paper describes my awesome study in 2018'
 class TestIndex(unittest.TestCase):
 
     def setUp(self):
-        self.paper1 = Paper('https://smith2017.pdf', 'Awesome Study in 2017',
-                            ['John Smith'], '2017')
-        self.paper2 = Paper('https://smith2018.pdf', 'Awesome Study in 2018',
-                            ['John Smith'], '2018')
+        self.paper1 = Paper('Awesome Study in 2017', ['John Smith'], '2017',
+                            50, 'https://smith2017.pdf')
+        self.paper2 = Paper('Awesome Study in 2018', ['John Smith'], '2018',
+                            10, 'https://smith2018.pdf')
 
     def tearDown(self):
         shutil.rmtree(TEST_INDEX_DIR)
