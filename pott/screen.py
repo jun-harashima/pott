@@ -50,7 +50,8 @@ class Screen:
             self._move(y - 1)
         elif ch == ord('n') and not self.assistant.option.every:
             papers = self.assistant.search_next(papers)
-            self._update_table(papers)
+            if papers:
+                self._update_table(papers)
         elif ch == ord('p') and not self.assistant.option.every:
             papers = self.assistant.search_previous(papers)
             self._update_table(papers)
