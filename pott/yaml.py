@@ -31,7 +31,7 @@ class Yaml:
         paper_by_id = {}
         for key, value in self._load_in_dictionary_form().items():
             paper_by_id[key] = Paper(value['title'], value['authors'],
-                                     value['year'], value['url'], )
+                                     value['year'], '', value['url'])
         return paper_by_id
 
     def _load_in_dictionary_form(self):

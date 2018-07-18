@@ -36,6 +36,14 @@ class TestYaml(unittest.TestCase):
                          'https://smith2018.pdf')
 
     @patch('pott.yaml.Yaml.YAML_FILE', TEST_FILE)
+    def test_load(self):
+        paper = Paper(PAPER1.title, PAPER1.authors, PAPER1.year,
+                      PAPER1.cited_by, PAPER1.url)
+        actual = Yaml().load()
+        desired = {'Smith2017': paper}
+        self.assertEqual(actual['Smith2017'].title, desired['Smith2017'].title)
+
+    @patch('pott.yaml.Yaml.YAML_FILE', TEST_FILE)
     def test_have(self):
         self.assertEqual(Yaml().have(PAPER1), True)
         self.assertEqual(Yaml().have(PAPER2), False)
