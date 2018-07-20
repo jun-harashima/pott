@@ -4,7 +4,7 @@ from pott.paper import Paper
 from whoosh.fields import Schema, ID, KEYWORD, TEXT
 from whoosh.filedb.filestore import FileStorage
 from whoosh.index import create_in, open_dir
-from whoosh.qparser import QueryParser
+from whoosh.qparser import MultifieldParser
 from whoosh.query import Every
 
 
@@ -48,7 +48,8 @@ class Index:
 
     def search(self, keywords, pagenum):
         index = self._set_index()
-        query_parser = QueryParser("title", schema=index.schema)
+        query_parser = MultifieldParser(['title', 'content'],
+                                        schema=index.schema)
         query = query_parser.parse(' '.join(keywords))
         papers = []
         with index.searcher() as searcher:
