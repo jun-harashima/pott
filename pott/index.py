@@ -4,6 +4,7 @@ from pott.paper import Paper
 from whoosh.fields import Schema, ID, KEYWORD, TEXT
 from whoosh.filedb.filestore import FileStorage
 from whoosh.index import create_in, open_dir
+from whoosh.highlight import UppercaseFormatter
 from whoosh.qparser import MultifieldParser
 from whoosh.query import Every
 
@@ -60,9 +61,11 @@ class Index:
             if page.pagecount < pagenum:
                 return []
 
+            page.results.formatter = UppercaseFormatter()
             for result in page:
                 paper = Paper(result['title'], result['authors'].split(','),
-                              result['year'])
+                              result['year'], 0, '',
+                              result.highlights('content', top=3))
                 papers.append(paper)
         return papers
 
@@ -72,9 +75,11 @@ class Index:
         papers = []
         with index.searcher() as searcher:
             results = searcher.search(query, limit=None)
+            results.formatter = UppercaseFormatter()
             for result in results:
                 paper = Paper(result['title'], result['authors'].split(','),
-                              result['year'])
+                              result['year'], 0, '',
+                              result.highlights('content', top=3))
                 papers.append(paper)
         return papers
 
