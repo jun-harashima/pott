@@ -18,10 +18,10 @@ def extract_papers_from(pq_html):
 
 
 def extract_paper_from(pq_div):
-    url = pq_div.find('div.gs_ggs.gs_fl a').attr('href')
     title = _extract_title_from(pq_div)
     authors, year = _extract_authors_and_year_from(pq_div)
     cited_by = _extract_cited_by_from(pq_div)
+    url = _extract_url_from(pq_div)
     return Paper(title, authors, year, cited_by, url)
 
 
@@ -46,3 +46,8 @@ def _extract_cited_by_from(pq_div):
         return ''
     else:
         return match.group(1)
+
+
+def _extract_url_from(pq_div):
+    url = pq_div.find('div.gs_ggs.gs_fl a').attr('href')
+    return url
