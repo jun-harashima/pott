@@ -12,12 +12,12 @@ def extract_papers_from(pq_html):
     papers = []
     for div in pq_html.find('div.gs_r.gs_or.gs_scl'):
         pq_div = PyQuery(div)
-        paper = extract_paper_from(pq_div)
+        paper = _extract_paper_from(pq_div)
         papers.append(paper)
     return papers
 
 
-def extract_paper_from(pq_div):
+def _extract_paper_from(pq_div):
     title = _extract_title_from(pq_div)
     authors, year = _extract_authors_and_year_from(pq_div)
     cited_by = _extract_cited_by_from(pq_div)
