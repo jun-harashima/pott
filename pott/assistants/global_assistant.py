@@ -34,9 +34,6 @@ class GlobalAssistant(Assistant):
             papers = super().search_next()
         return papers
 
-    def have_indexed(self, paper):
-        return self.yaml.have(paper)
-
     def save(self, paper):
         response = self._download(paper)
         if response is None:
