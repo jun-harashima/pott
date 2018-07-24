@@ -58,7 +58,7 @@ class Screen:
         elif ch == ord('s'):
             paper = papers[y - self.HEADER_HEIGHT]
             if self.assistant.have_indexed(paper):
-                success = self._show_file_path(paper)
+                success = self._show_file_path_and_snippets(paper)
             else:
                 success = self._save(paper)
             if success:
@@ -98,10 +98,11 @@ class Screen:
         self.stdscr.addstr(0, 0, self.table.draw())
         self.stdscr.move(self.HEADER_HEIGHT, 0)
 
-    def _show_file_path(self, paper):
+    def _show_file_path_and_snippets(self, paper):
         self._delete_message()
         file_path = paper.pdf.file_path
         self.stdscr.addstr(13, 0, 'The paper has been saved as ' + file_path)
+        self.stdscr.addstr(18, 0, paper.snippets)
         return True
 
     def _recommend_other(self, paper):
