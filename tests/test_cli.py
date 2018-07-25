@@ -1,6 +1,8 @@
 import unittest
+from unittest.mock import patch
 from click.testing import CliRunner
 from pott import cli
+from pott.yaml import Yaml
 
 
 class TestCli(unittest.TestCase):
@@ -13,3 +15,13 @@ class TestCli(unittest.TestCase):
         help_result = runner.invoke(cli.main, ['--help'])
         assert help_result.exit_code == 0
         assert '--help  Show this message and exit.' in help_result.output
+
+    @patch.object(Yaml, 'load', return_value={})
+    def test_reindex(self, mocked_load):
+        runner = CliRunner()
+        result = runner.invoke(cli.main, ['reindex'])
+        assert result.exit_code == 0
+
+
+if __name__ == "__main__":
+    unittest.main()
