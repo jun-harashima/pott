@@ -34,7 +34,8 @@ def list():
 
 @main.command()
 def reindex():
-    assistant = LocalAssistant()
+    option = Option()
+    assistant = LocalAssistant((), option)
     assistant.reindex()
     return 0
 
