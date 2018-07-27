@@ -24,6 +24,7 @@ class Index:
 
         for paper in paper_by_id.values():
             print('indexing "' + paper.title + '"')
+            paper.text.save(paper.pdf.extract_text())
             self.save(paper)
 
     def _create(self):
