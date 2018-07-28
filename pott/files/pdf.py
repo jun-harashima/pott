@@ -35,4 +35,18 @@ class Pdf(File):
                     interpreter.process_page(page)
                 except ValueError as e:
                     logger.warn(str(e))
-            return stringio.getvalue()
+            pdfminer_result = stringio.getvalue()
+            formed_result = self._form(pdfminer_result)
+            return formed_result
+
+    def _form(self, pdfminer_result):
+        paragraphs = []
+        lines = []
+        for line in pdfminer_result.split('\n'):
+            if len(line) == 0:
+                paragraph = ' '.join(lines)
+                paragraphs.append(paragraph)
+                lines = []
+            else:
+                lines.append(line)
+        return '\n'.join(paragraphs)
