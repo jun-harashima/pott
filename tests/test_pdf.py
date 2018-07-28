@@ -9,7 +9,7 @@ class TestPdf(unittest.TestCase):
     def test_extract_text(self):
         pdf = Pdf('test.pdf')
         text = pdf.extract_text()
-        self.assertEqual(text, 'This is a pdf file for test.\n\n\f')
+        self.assertEqual(text, 'This is a pdf file for test.')
 
 
 if __name__ == "__main__":
