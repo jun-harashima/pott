@@ -121,7 +121,7 @@ class Screen:
         return success
 
     def _delete_message(self):
-        for _ in range(2):
+        for _ in range(8):
             self.stdscr.move(13, 0)
             self.stdscr.deleteln()
 
