@@ -45,8 +45,10 @@ class Screen:
 
     def _act_on_key(self, ch, y, x, selected_papers, papers):
         if ch == curses.KEY_DOWN and y <= len(papers):
+            self._show_snippet_for(papers[y + 1 - self.HEADER_HEIGHT])
             self._move(y + 1)
         elif ch == curses.KEY_UP and y > self.HEADER_HEIGHT:
+            self._show_snippet_for(papers[y - 1 - self.HEADER_HEIGHT])
             self._move(y - 1)
         elif ch == ord('n') and not self.assistant.option.every:
             papers = self.assistant.search_next(papers)
@@ -58,7 +60,7 @@ class Screen:
         elif ch == ord('s'):
             paper = papers[y - self.HEADER_HEIGHT]
             if self.assistant.have_indexed(paper):
-                success = self._show_file_path_and_snippets(paper)
+                success = self._show_file_path_for(paper)
             else:
                 success = self._save(paper)
             if success:
@@ -75,7 +77,7 @@ class Screen:
     def _update_table(self, papers):
         self._delete_rows()
         self._set_rows(papers)
-        self._draw_table()
+        self._draw_table(papers)
 
     def _delete_rows(self):
         self.table._rows = []
@@ -94,16 +96,19 @@ class Screen:
             row = [rank, pdf, first_author, year, cited_by, title]
             self.table.add_row(row)
 
-    def _draw_table(self):
+    def _draw_table(self, papers):
         self.stdscr.addstr(0, 0, self.table.draw())
+        self._show_snippet_for(papers[0])
         self.stdscr.move(self.HEADER_HEIGHT, 0)
 
-    def _show_file_path_and_snippets(self, paper):
+    def _show_file_path_for(self, paper):
         self._delete_message()
         file_path = paper.pdf.file_path
         self.stdscr.addstr(13, 0, 'The paper has been saved as ' + file_path)
-        self.stdscr.addstr(18, 0, paper.snippets)
         return True
+
+    def _show_snippet_for(self, paper):
+        self.stdscr.addstr(18, 0, paper.snippets)
 
     def _recommend_other(self, paper):
         self._delete_message()
