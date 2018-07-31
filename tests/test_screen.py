@@ -15,28 +15,36 @@ class TestScreen(unittest.TestCase):
     PAPER2 = Paper('Awesome Study in 2018', ['John Smith'], '2018', 10,
                    'https://smith2018.pdf')
 
+    @patch.object(Screen, '_show_snippet_for')
     @patch.object(Screen, '_move')
-    def test__act_on_key_for_key_down(self, mock__move):
+    def test__act_on_key_for_key_down(self, mock__move,
+                                      mock__show_snippet_for):
         assistant = Assistant()
         screen = Screen(assistant)
         papers = [self.PAPER1, self.PAPER2]
         screen._act_on_key(258, 2, 0, [], papers)  # 258: KEY_DOWN
+        mock__show_snippet_for.assert_called_once_with(self.PAPER2)
         mock__move.assert_called_once_with(3)
 
+    @patch.object(Screen, '_show_snippet_for')
     @patch.object(Screen, '_move')
-    def test__act_on_key_for_key_down_for_edge_case(self, mock__move):
+    def test__act_on_key_for_key_down_for_edge_case(self, mock__move,
+                                                    mock__show_snippet_for):
         assistant = Assistant()
         screen = Screen(assistant)
         papers = [self.PAPER1, self.PAPER2]
         screen._act_on_key(258, 3, 0, [], papers)
+        mock__show_snippet_for.assert_not_called()
         mock__move.assert_not_called()
 
+    @patch.object(Screen, '_show_snippet_for')
     @patch.object(Screen, '_move')
-    def test__act_on_key_for_key_up(self, mock__move):
+    def test__act_on_key_for_key_up(self, mock__move, mock__show_snippet_for):
         assistant = Assistant()
         screen = Screen(assistant)
-        papers = [self.PAPER1]
+        papers = [self.PAPER1, self.PAPER2]
         screen._act_on_key(259, 3, 0, [], papers)  # 258: KEY_UP
+        mock__show_snippet_for.assert_called_once_with(self.PAPER1)
         mock__move.assert_called_once_with(2)
 
     @patch.object(Screen, '_update_table')
