@@ -56,4 +56,5 @@ def _extract_url_from(pq_div):
 
 def _extract_snippets_from(pq_div):
     snippets = pq_div.find('div.gs_ri div.gs_rs').html()
+    snippets = re.sub(r'<[\w/]+>', '', snippets)
     return snippets
