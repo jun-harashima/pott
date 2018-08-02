@@ -8,6 +8,7 @@ class Screen:
     COLS_ALIGN = ['r', 'r', 'l', 'r', 'r', 'l']
     COLS_WIDTH = [4, 3, 12, 4, 8, 79]
     HEADER_HEIGHT = 2
+    MESSAGE_Y = 17
 
     def __init__(self, assistant):
         self.assistant = assistant
@@ -103,31 +104,35 @@ class Screen:
 
     def _show_file_path_for(self, paper):
         self._delete_message()
-        file_path = paper.pdf.file_path
-        self.stdscr.addstr(13, 0, 'The paper has been saved as ' + file_path)
+        message = 'The paper has been saved as ' + paper.pdf.file_path
+        self.stdscr.addstr(self.MESSAGE_Y, 0, message)
         return True
 
     def _show_snippet_for(self, paper):
-        self.stdscr.addstr(18, 0, paper.snippets)
+        self.stdscr.addstr(13, 0, paper.snippets)
 
-    def _recommend_other(self, paper):
+    def _recommend_other(self):
         self._delete_message()
-        self.stdscr.addstr(13, 0, 'The paper is not available.')
+        message = 'The paper is not available.'
+        self.stdscr.addstr(self.MESSAGE_Y, 0, message)
 
     def _save(self, paper):
         self._delete_message()
-        self.stdscr.addstr(13, 0, 'Downloading "' + paper.title + '"')
+        message = 'Downloading "' + paper.title + '"'
+        self.stdscr.addstr(self.MESSAGE_Y, 0, message)
         self.stdscr.refresh()
         success = self.assistant.save(paper)
         if success:
-            self.stdscr.addstr(14, 0, 'Saved as "' + paper.pdf.file_path + '"')
+            message = 'Saved as "' + paper.pdf.file_path + '"'
+            self.stdscr.addstr(self.MESSAGE_Y + 1, 0, message)
         else:
-            self.stdscr.addstr(14, 0, 'The paper could not be downloaded.')
+            message = 'The paper could not be downloaded.'
+            self.stdscr.addstr(self.MESSAGE_Y + 1, 0, message)
         return success
 
     def _delete_message(self):
         for _ in range(8):
-            self.stdscr.move(13, 0)
+            self.stdscr.move(self.MESSAGE_Y, 0)
             self.stdscr.deleteln()
 
     def _append_without_duplication(self, selected_papers, paper):
