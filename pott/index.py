@@ -4,7 +4,7 @@ from pott.paper import Paper
 from whoosh.fields import Schema, ID, KEYWORD, TEXT
 from whoosh.filedb.filestore import FileStorage
 from whoosh.index import create_in, open_dir
-from whoosh.highlight import UppercaseFormatter
+from whoosh.highlight import UppercaseFormatter, SentenceFragmenter
 from whoosh.qparser import MultifieldParser
 from whoosh.query import Every
 
@@ -63,6 +63,7 @@ class Index:
                 return []
 
             page.results.formatter = UppercaseFormatter()
+            page.results.fragmenter = SentenceFragmenter()
             for result in page:
                 paper = Paper(result['title'], result['authors'].split(','),
                               result['year'], 0, '',
