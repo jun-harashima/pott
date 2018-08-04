@@ -9,6 +9,7 @@ class Screen:
     COLS_WIDTH = [4, 3, 12, 4, 8, 79]
     HEADER_HEIGHT = 2
     MESSAGE_Y = 17
+    SNIPPET_WIDTH = 125
 
     def __init__(self, assistant):
         self.assistant = assistant
@@ -109,7 +110,9 @@ class Screen:
         return True
 
     def _show_snippet_for(self, paper):
-        self.stdscr.addstr(13, 0, paper.snippets)
+        lines = [paper.snippets[i:i+self.SNIPPET_WIDTH]
+                 for i in range(0, len(paper.snippets), self.SNIPPET_WIDTH)]
+        self.stdscr.addstr(13, 0, '\n'.join(lines))
 
     def _recommend_other(self):
         self._delete_message()
