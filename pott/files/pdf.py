@@ -41,12 +41,14 @@ class Pdf(File):
 
     def _form(self, pdfminer_result):
         paragraphs = []
-        lines = []
+        paragraph = ''
         for line in pdfminer_result.split('\n'):
             if len(line) == 0:
-                paragraph = ' '.join(lines)
-                paragraphs.append(paragraph)
-                lines = []
+                paragraphs.append(paragraph[:-1])
+                paragraph = ''
+                continue
+            if line[-1:] == '-':
+                paragraph += line[:-1]
             else:
-                lines.append(line)
+                paragraph += line + ' '
         return '\n'.join(paragraphs)
