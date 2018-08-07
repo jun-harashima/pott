@@ -110,9 +110,8 @@ class Screen:
         return True
 
     def _show_snippet_for(self, paper):
-        lines = [paper.snippets[i:i+self.SNIPPET_WIDTH]
-                 for i in range(0, len(paper.snippets), self.SNIPPET_WIDTH)]
-        self.stdscr.addstr(13, 0, '\n'.join(lines))
+        snippets = [snippet[:self.SNIPPET_WIDTH] for snippet in paper.snippets]
+        self.stdscr.addstr(13, 0, '\n'.join(snippets))
 
     def _recommend_other(self):
         self._delete_message()

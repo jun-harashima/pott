@@ -1,4 +1,5 @@
 import os
+import re
 import shutil
 from pott.paper import Paper
 from whoosh.fields import Schema, ID, KEYWORD, TEXT
@@ -63,11 +64,11 @@ class Index:
                 return []
 
             page.results.formatter = UppercaseFormatter()
-            page.results.fragmenter = SentenceFragmenter()
+            page.results.fragmenter = SentenceFragmenter(sentencechars='.!?\n')
             for result in page:
+                snippets = self._translate(result.highlights('content', top=3))
                 paper = Paper(result['title'], result['authors'].split(','),
-                              result['year'], 0, '',
-                              result.highlights('content', top=3))
+                              result['year'], 0, '', snippets)
                 papers.append(paper)
         return papers
 
@@ -79,9 +80,9 @@ class Index:
             results = searcher.search(query, limit=None)
             results.formatter = UppercaseFormatter()
             for result in results:
+                snippets = self._translate(result.highlights('content', top=3))
                 paper = Paper(result['title'], result['authors'].split(','),
-                              result['year'], 0, '',
-                              result.highlights('content', top=3))
+                              result['year'], 0, '', snippets)
                 papers.append(paper)
         return papers
 
@@ -89,3 +90,6 @@ class Index:
         storage = FileStorage(self.INDEX_DIR)
         index = storage.open_index()
         return index
+
+    def _translate(self, highlights):
+        return re.sub(r'\n', '', highlights).split('...')

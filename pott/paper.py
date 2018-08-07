@@ -5,7 +5,7 @@ from pott.files.text import Text
 class Paper:
 
     def __init__(self, title, authors=[], year=None, cited_by=None, url=None,
-                 snippets=''):
+                 snippets=[]):
         self.title = title
         self.authors = authors
         self.year = year
