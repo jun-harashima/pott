@@ -40,5 +40,13 @@ def reindex():
     return 0
 
 
+@main.command()
+def kwic():
+    option = Option()
+    assistant = LocalAssistant((), option)
+    assistant.kwic()
+    return 0
+
+
 if __name__ == "__main__":
     sys.exit(main())

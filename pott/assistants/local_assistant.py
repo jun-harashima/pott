@@ -25,3 +25,6 @@ class LocalAssistant(Assistant):
     def reindex(self):
         paper_by_id = self.yaml.load()
         self.index.reindex(paper_by_id)
+
+    def kwic(self):
+        pass
