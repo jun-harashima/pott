@@ -1,6 +1,6 @@
-====================================
-How to find papers from the Internet
-====================================
+================================
+Finding papers from the Internet
+================================
 
 To find papers from the Internet, use ``search`` subcommand as follows:
 

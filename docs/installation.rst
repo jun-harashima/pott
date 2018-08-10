@@ -1,8 +1,8 @@
 .. highlight:: shell
 
-==============
-How to install
-==============
+============
+Installation
+============
 
 
 Stable release
