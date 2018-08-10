@@ -8,6 +8,7 @@ class Screen:
     COLS_ALIGN = ['r', 'r', 'l', 'r', 'r', 'l']
     COLS_WIDTH = [4, 3, 12, 4, 8, 79]
     HEADER_HEIGHT = 2
+    SNIPPET_Y = 13
     MESSAGE_Y = 17
     SNIPPET_WIDTH = 125
 
@@ -111,7 +112,7 @@ class Screen:
 
     def _show_snippet_for(self, paper):
         snippets = [snippet[:self.SNIPPET_WIDTH] for snippet in paper.snippets]
-        self.stdscr.addstr(13, 0, '\n'.join(snippets))
+        self.stdscr.addstr(self.SNIPPET_Y, 0, '\n'.join(snippets))
 
     def _recommend_other(self):
         self._delete_message()
