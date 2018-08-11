@@ -1,4 +1,5 @@
 from pott.assistants.assistant import Assistant
+from pott.screens.kwic_screen import KwicScreen
 
 
 class LocalAssistant(Assistant):
@@ -27,4 +28,5 @@ class LocalAssistant(Assistant):
         self.index.reindex(paper_by_id)
 
     def kwic(self):
-        pass
+        screen = KwicScreen()
+        screen.show()
