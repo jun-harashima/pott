@@ -38,9 +38,11 @@ class GlobalAssistant(Assistant):
         response = self._download(paper)
         if response is None:
             return False
+        text = paper.pdf.extract_text()
         paper.pdf.save(response.content)
-        paper.text.save(paper.pdf.extract_text())
+        paper.text.save(text)
         self.index.save(paper)
+        self.ngram.take_in(text)
         self.yaml.update(paper)
         return True
 
