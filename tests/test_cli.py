@@ -22,11 +22,6 @@ class TestCli(unittest.TestCase):
         result = runner.invoke(cli.main, ['reindex'])
         assert result.exit_code == 0
 
-    def test_kwic(self):
-        runner = CliRunner()
-        result = runner.invoke(cli.main, ['kwic'])
-        assert result.exit_code == 0
-
 
 if __name__ == "__main__":
     unittest.main()
