@@ -11,3 +11,4 @@ pdfminer.six==20170720
 whoosh==2.7.4
 texttable>=1.0
 sphinx_rtd_theme==0.4.0
+nltk==3.3
