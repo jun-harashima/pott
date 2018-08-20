@@ -1,11 +1,27 @@
+import os
+import pickle
 import unittest
+from unittest.mock import patch
 from pott.ngram import Ngram
+
+TEST_FILE = 'test.pickle'
 
 
 class TestNgram(unittest.TestCase):
 
+    def setUp(self):
+        with open(TEST_FILE, mode='wb') as file:
+            n_to_ngram = {}
+            for n in range(1, 5):
+                n_to_ngram[n] = {}
+            pickle.dump(n_to_ngram, file)
+
+    def tearDown(self):
+        os.remove(TEST_FILE)
+
+    @patch('pott.ngram.Ngram.NGRAM_FILE', TEST_FILE)
     def test_take_in(self):
-        ngram = Ngram()
+        ngram = Ngram(5)
         text = 'This is a sentence for this class.'
         ngram.take_in(text)
         self.assertEqual(ngram.n_to_ngram[1]['this'], 1)
