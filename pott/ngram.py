@@ -5,12 +5,21 @@ from nltk.util import ngrams
 
 class Ngram:
 
+    DOT_DIR = os.environ['HOME'] + '/.pott'
     NGRAM_FILE = os.environ['HOME'] + '/.pott/ngram.pickle'
 
     def __init__(self, max_n=5):
-        self.n_to_ngram = {}
-        for n in range(1, max_n):
-            self.n_to_ngram[n] = {}
+        if not os.path.isdir(self.DOT_DIR):
+            os.mkdir(self.DOT_DIR)
+
+        if not os.path.isfile(self.NGRAM_FILE):
+            self.n_to_ngram = {}
+            for n in range(1, max_n):
+                self.n_to_ngram[n] = {}
+            self._save()
+
+        with open(self.NGRAM_FILE, 'rb') as file:
+            self.n_to_ngram = pickle.load(file)
 
     def take_in(self, text):
         for n in self.n_to_ngram.keys():
