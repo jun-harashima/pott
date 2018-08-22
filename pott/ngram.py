@@ -21,6 +21,13 @@ class Ngram:
         with open(self.NGRAM_FILE, 'rb') as file:
             self.n_to_ngram = pickle.load(file)
 
+    def reconstruct(self, paper_by_id):
+        os.remove(self.NGRAM_FILE)
+        self.__init__()
+        for paper in paper_by_id.values():
+            print('counting N-gram in"' + paper.title + '"')
+            self.take_in(paper.pdf.extract_text())
+
     def take_in(self, text):
         for n in self.n_to_ngram.keys():
             for line in text.split('\n'):
