@@ -20,10 +20,10 @@ class TestNgram(unittest.TestCase):
         os.remove(TEST_FILE)
 
     @patch('pott.ngram.Ngram.NGRAM_FILE', TEST_FILE)
-    def test_take_in(self):
+    def test_load(self):
         ngram = Ngram(5)
         text = 'This is a sentence for this class.'
-        ngram.take_in(text)
+        ngram.load(text)
         self.assertEqual(ngram.n_to_ngram[1]['this'], 1)
         self.assertEqual(ngram.n_to_ngram[1]['is'], 1)
         self.assertEqual(ngram.n_to_ngram[1]['class.'], 1)
