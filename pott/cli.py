@@ -33,10 +33,10 @@ def list():
 
 
 @main.command()
-def reindex():
+def reload():
     option = Option()
     assistant = LocalAssistant((), option)
-    assistant.reindex()
+    assistant.reload()
     return 0
 
 

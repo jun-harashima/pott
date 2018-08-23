@@ -23,9 +23,9 @@ class LocalAssistant(Assistant):
         pagenum = self.option.start // self.PER_PAGE + 1
         return self.index.search(self.keywords, pagenum)
 
-    def reindex(self):
+    def reload(self):
         paper_by_id = self.yaml.load()
-        self.index.reindex(paper_by_id)
+        self.index.reload(paper_by_id)
 
     def kwic(self):
         screen = KwicScreen()
