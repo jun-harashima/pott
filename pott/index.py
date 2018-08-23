@@ -19,7 +19,7 @@ class Index:
         if not os.path.isdir(self.INDEX_DIR):
             self._create()
 
-    def reindex(self, paper_by_id):
+    def reload(self, paper_by_id):
         shutil.rmtree(self.INDEX_DIR)
         self._create()
 

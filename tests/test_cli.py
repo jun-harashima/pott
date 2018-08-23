@@ -17,9 +17,9 @@ class TestCli(unittest.TestCase):
         assert '--help  Show this message and exit.' in help_result.output
 
     @patch.object(Yaml, 'load', return_value={})
-    def test_reindex(self, mocked_load):
+    def test_reload(self, mocked_load):
         runner = CliRunner()
-        result = runner.invoke(cli.main, ['reindex'])
+        result = runner.invoke(cli.main, ['reload'])
         assert result.exit_code == 0
 
 
