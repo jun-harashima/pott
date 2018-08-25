@@ -26,6 +26,7 @@ class LocalAssistant(Assistant):
     def reload(self):
         paper_by_id = self.yaml.load()
         self.index.reload(paper_by_id)
+        self.ngram.reload(paper_by_id)
 
     def kwic(self):
         screen = KwicScreen()

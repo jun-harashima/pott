@@ -1,8 +1,10 @@
 import unittest
 from unittest.mock import patch
 from pott.index import Index
+from pott.ngram import Ngram
 from pott.option import Option
 from pott.paper import Paper
+from pott.yaml import Yaml
 from pott.assistants.local_assistant import LocalAssistant
 
 
@@ -35,6 +37,16 @@ class TestLocalAssistant(unittest.TestCase):
             option = Option(start=0)
             assistant = LocalAssistant((), option)
             self.assertEqual(assistant._search(), [paper])
+
+    @patch.object(Yaml, 'load', return_value={})
+    @patch.object(Index, 'reload')
+    @patch.object(Ngram, 'reload')
+    def test_reload(self, ngram_reload, index_reload, load):
+        assistant = LocalAssistant((), Option())
+        assistant.reload()
+        load.assert_called_once_with()
+        index_reload.assert_called_once_with({})
+        ngram_reload.assert_called_once_with({})
 
 
 if __name__ == "__main__":
