@@ -6,6 +6,7 @@ from nltk.util import ngrams
 class Ngram:
 
     DOT_DIR = os.environ['HOME'] + '/.pott'
+    TXT_DIR = os.environ['HOME'] + '/.pott/txt'
     NGRAM_FILE = os.environ['HOME'] + '/.pott/ngram.pickle'
 
     def __init__(self, max_n=5):
@@ -26,7 +27,8 @@ class Ngram:
         self.__init__()
         for paper in paper_by_id.values():
             print('counting N-gram in"' + paper.title + '"')
-            self.load(paper.pdf.extract_text())
+            with open(self.TXT_DIR + '/' + paper.id + '.txt', 'r') as txt_file:
+                self.load(txt_file.read())
 
     def load(self, text):
         for n in self.n_to_ngram.keys():
