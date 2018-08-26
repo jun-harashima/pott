@@ -22,10 +22,8 @@ class Index:
     def reload(self, paper_by_id):
         shutil.rmtree(self.INDEX_DIR)
         self._create()
-
         for paper in paper_by_id.values():
             print('indexing "' + paper.title + '"')
-            paper.text.save(paper.pdf.extract_text())
             self.save(paper)
 
     def _create(self):

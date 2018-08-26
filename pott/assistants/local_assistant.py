@@ -25,6 +25,9 @@ class LocalAssistant(Assistant):
 
     def reload(self):
         paper_by_id = self.yaml.load()
+        for paper in paper_by_id.values():
+            text = paper.pdf.extract_text()
+            paper.text.save(text)
         self.index.reload(paper_by_id)
         self.ngram.reload(paper_by_id)
 
