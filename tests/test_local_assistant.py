@@ -10,7 +10,7 @@ from pott.assistants.local_assistant import LocalAssistant
 
 class TestLocalAssistant(unittest.TestCase):
 
-    def test_transform(self):
+    def test__transform(self):
 
         option = Option()
         assistant = LocalAssistant(('keyword', ), option)
