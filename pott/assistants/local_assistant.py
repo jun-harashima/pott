@@ -26,6 +26,7 @@ class LocalAssistant(Assistant):
     def reload(self):
         paper_by_id = self.yaml.load()
         for paper in paper_by_id.values():
+            print('extracting text from "' + paper.title + '"')
             text = paper.pdf.extract_text()
             paper.text.save(text)
         self.index.reload(paper_by_id)
