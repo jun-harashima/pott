@@ -10,9 +10,9 @@ class Assistant:
     PER_PAGE = 10
 
     def __init__(self, option=Option()):
+        self.yaml = Yaml()
         self.index = Index()
         self.ngram = Ngram()
-        self.yaml = Yaml()
         self.option = option
 
     def search(self):
