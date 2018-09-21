@@ -66,7 +66,7 @@ class Index:
             for result in page:
                 snippets = self._translate(result.highlights('content', top=3))
                 paper = Paper(result['title'], result['authors'].split(','),
-                              result['year'], 0, '', snippets)
+                              result['year'], 0, '', ' ... '.join(snippets))
                 papers.append(paper)
         return papers
 
@@ -80,7 +80,7 @@ class Index:
             for result in results:
                 snippets = self._translate(result.highlights('content', top=3))
                 paper = Paper(result['title'], result['authors'].split(','),
-                              result['year'], 0, '', snippets)
+                              result['year'], 0, '', ' ... '.join(snippets))
                 papers.append(paper)
         return papers
 
