@@ -26,7 +26,7 @@ class Ngram:
         os.remove(self.NGRAM_FILE)
         self.__init__()
         for paper in paper_by_id.values():
-            print('counting N-gram in"' + paper.title + '"')
+            print('counting N-gram in "' + paper.title + '"')
             with open(self.TXT_DIR + '/' + paper.id + '.txt', 'r') as txt_file:
                 self.load(txt_file.read())
 
