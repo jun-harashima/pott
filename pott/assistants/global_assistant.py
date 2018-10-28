@@ -1,7 +1,6 @@
 import requests
-from pyquery import PyQuery
+from gsch.agent import Agent
 from pott.assistants.assistant import Assistant
-from pott.utils.html_utils import extract_papers_from
 from pott.utils.log import logger
 
 
@@ -14,20 +13,9 @@ class GlobalAssistant(Assistant):
         super().__init__(option)
 
     def _search(self):
-        url = self._set_url()
-        pq_html = PyQuery(url)
-        papers = extract_papers_from(pq_html)
+        agent = Agent()
+        papers = agent.search(self.keywords, self.option)
         return papers
-
-    def _set_url(self):
-        url = self.SCHOLAR_URL + '?q=' + ' '.join(self.keywords)
-        if self.option.start != 0:
-            url += '&start=' + str(self.option.start)
-        if self.option.year_low is not None:
-            url += '&as_ylo=' + self.option.year_low
-        if self.option.year_high is not None:
-            url += '&as_yhi=' + self.option.year_high
-        return url
 
     def search_next(self, papers):
         if self.option.start < 990:
