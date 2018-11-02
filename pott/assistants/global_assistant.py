@@ -1,7 +1,7 @@
 import requests
 from gsch.agent import Agent
 from pott.assistants.assistant import Assistant
-from pott.utils.log import logger
+from pott.log import logger
 
 
 class GlobalAssistant(Assistant):

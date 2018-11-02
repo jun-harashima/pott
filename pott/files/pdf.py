@@ -5,7 +5,7 @@ from pdfminer.layout import LAParams
 from pdfminer.pdfpage import PDFPage
 from io import StringIO
 from pott.files.file import File
-from pott.utils.log import logger
+from pott.log import logger
 
 
 class Pdf(File):
