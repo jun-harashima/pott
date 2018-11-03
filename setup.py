@@ -18,10 +18,6 @@ with open('HISTORY.rst') as history_file:
 
 requirements = ['Click>=6.0', ]
 
-setup_requirements = [ ]
-
-test_requirements = [ ]
-
 setup(
     author="Jun Harashima",
     author_email='j.harashima@gmail.com',
@@ -50,9 +46,7 @@ setup(
     keywords='pott',
     name='pott',
     packages=find_packages(include=['pott', 'pott.assistants', 'pott.files', 'pott.screens']),
-    setup_requires=setup_requirements,
     test_suite='tests',
-    tests_require=test_requirements,
     url='https://github.com/jun-harashima/pott',
     version='0.0.2',
     zip_safe=False,
