@@ -12,3 +12,4 @@ texttable>=1.0
 sphinx_rtd_theme==0.4.0
 nltk==3.3
 gsch==0.2.4
+tinysa==0.2.2
